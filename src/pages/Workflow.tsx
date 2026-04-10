@@ -1,85 +1,205 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { useRole } from "@/contexts/RoleContext";
-import {
-  CheckCircle2,
-  Circle,
-  Clock,
-  AlertTriangle,
-  XCircle,
-  ChevronRight,
-  Upload,
-  Play,
-  Info,
-  FileText,
-  Shield,
-  Scale,
-  Loader2,
-} from "lucide-react";
+import { ChevronRight, AlertTriangle, Play, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { ProcessRail } from "@/components/workflow/ProcessRail";
+import { ExecutionLog } from "@/components/workflow/ExecutionLog";
+import { ContextPanel } from "@/components/workflow/ContextPanel";
+import { LCIssuanceResult } from "@/components/workflow/LCIssuanceResult";
+import { FailureUploadPanel } from "@/components/workflow/FailureUploadPanel";
+import type { Stage, ValidationStep } from "@/components/workflow/WorkflowTypes";
 
-type StageStatus = "completed" | "active" | "pending" | "failed" | "hold";
+type WorkflowOutcome = "running" | "success" | "failed" | "hold";
 
-interface Stage {
-  id: number;
-  title: string;
-  status: StageStatus;
-  confidence?: number;
-  lastAction?: string;
-}
-
-interface ValidationStep {
-  label: string;
-  status: "completed" | "running" | "pending" | "failed" | "hold";
-  duration?: string;
-  explanation: string;
-}
-
-const initialStages: Stage[] = [
-  { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-  { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: "Apr 10, 15:01" },
-  { id: 3, title: "LC Issuance", status: "pending" },
-];
-
-const validationSteps: ValidationStep[] = [
+const sanctionsSteps: ValidationStep[] = [
   { label: "Initiating AML & Sanctions Workflow", status: "completed", duration: "1.2s", explanation: "Establishes secure connection to sanctions databases and initializes screening parameters." },
   { label: "Sanctions & Watchlist Matching", status: "completed", duration: "3.8s", explanation: "Screens all parties against OFAC SDN, EU Consolidated, UN Sanctions, and proprietary watchlists." },
-  { label: "Counterparty Verification", status: "running", duration: "—", explanation: "Validates beneficial ownership structures and cross-references with adverse media databases." },
+  { label: "Counterparty Verification", status: "running", explanation: "Validates beneficial ownership structures and cross-references with adverse media databases." },
   { label: "Restricted Goods & Ports Screening", status: "pending", explanation: "Checks commodity codes against dual-use and restricted goods lists; validates ports of origin/destination." },
   { label: "Composite Risk Scoring", status: "pending", explanation: "Aggregates all risk signals into a weighted composite score for decisioning." },
 ];
 
-const stageStatusIcon = (status: StageStatus) => {
-  switch (status) {
-    case "completed": return <CheckCircle2 className="w-5 h-5 text-emerald-500" />;
-    case "active": return <Loader2 className="w-5 h-5 text-primary animate-spin" />;
-    case "pending": return <Circle className="w-5 h-5 text-muted-foreground/40" />;
-    case "failed": return <XCircle className="w-5 h-5 text-destructive" />;
-    case "hold": return <AlertTriangle className="w-5 h-5 text-amber-500" />;
-  }
-};
+const lcIssuanceSteps: ValidationStep[] = [
+  { label: "LC Issuance Workflow Initiation", status: "pending", explanation: "Initializes the LC generation engine and loads transaction parameters." },
+  { label: "UCP 600 Rule Validation", status: "pending", explanation: "Validates all terms against UCP 600 articles for international compliance." },
+  { label: "Article-Level Compliance Checking", status: "pending", explanation: "Checks each LC article individually for discrepancies and regulatory alignment." },
+  { label: "Trade & Payment Terms Verification", status: "pending", explanation: "Confirms payment schedules, Incoterms, and bank obligations match the underlying contract." },
+  { label: "Discrepancy Detection", status: "pending", explanation: "Final sweep for inconsistencies across all documents and terms before issuance." },
+];
 
-const stepIcon = (status: string) => {
-  switch (status) {
-    case "completed": return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
-    case "running": return <Loader2 className="w-4 h-4 text-primary animate-spin" />;
-    case "pending": return <Circle className="w-4 h-4 text-muted-foreground/30" />;
-    case "failed": return <XCircle className="w-4 h-4 text-destructive" />;
-    case "hold": return <AlertTriangle className="w-4 h-4 text-amber-500" />;
-  }
-};
+const failReasons = [
+  "Sanctioned entity match detected: Counterparty flagged on OFAC SDN List (confidence: 94%).",
+  "Beneficial ownership structure could not be verified within regulatory timeframe.",
+  "Commodity code HSN-8471 classified as dual-use under EU Regulation 2021/821.",
+];
+
+const holdReasons = [
+  "Pending clarification from beneficiary on updated trade license.",
+  "Additional documentation required for counterparty KYC verification.",
+  "Port of destination under temporary screening hold — awaiting regulatory update.",
+];
 
 const Workflow = () => {
   const { roleName } = useRole();
-  const [stages] = useState<Stage[]>(initialStages);
-  const [steps] = useState<ValidationStep[]>(validationSteps);
+  const [currentPhase, setCurrentPhase] = useState<"sanctions" | "lc">("sanctions");
+  const [outcome, setOutcome] = useState<WorkflowOutcome>("running");
+  const [sanctionSteps, setSanctionSteps] = useState<ValidationStep[]>(sanctionsSteps);
+  const [lcSteps, setLcSteps] = useState<ValidationStep[]>(lcIssuanceSteps);
+  const [stages, setStages] = useState<Stage[]>([
+    { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+    { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: "Apr 10, 15:01" },
+    { id: 3, title: "LC Issuance", status: "pending" },
+  ]);
+  const [isSimulating, setIsSimulating] = useState(false);
+
+  const now = () => {
+    const d = new Date();
+    return `Apr ${d.getDate()}, ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`;
+  };
+
+  const simulateSanctions = useCallback(() => {
+    setIsSimulating(true);
+    setOutcome("running");
+    const durations = ["2.1s", "4.5s", "3.2s"];
+    let step = 2; // start from Counterparty Verification (index 2)
+
+    const advance = () => {
+      if (step >= sanctionsSteps.length) {
+        // Sanctions complete → move to LC
+        setStages((prev) => prev.map((s) =>
+          s.id === 2 ? { ...s, status: "completed" as const, confidence: 100, lastAction: now() }
+          : s.id === 3 ? { ...s, status: "active" as const, confidence: 0, lastAction: now() }
+          : s
+        ));
+        setCurrentPhase("lc");
+        setIsSimulating(false);
+        setTimeout(() => simulateLC(), 800);
+        return;
+      }
+      setSanctionSteps((prev) => prev.map((s, i) =>
+        i === step ? { ...s, status: "running" as const } : i < step ? { ...s, status: "completed" as const, duration: s.duration || durations[i - 2] || "1.5s" } : s
+      ));
+      setTimeout(() => {
+        setSanctionSteps((prev) => prev.map((s, i) =>
+          i === step ? { ...s, status: "completed" as const, duration: durations[step - 2] || "2.0s" } : s
+        ));
+        setStages((prev) => prev.map((s) =>
+          s.id === 2 ? { ...s, confidence: Math.min(100, 68 + (step - 1) * 12) } : s
+        ));
+        step++;
+        setTimeout(advance, 600);
+      }, 1500);
+    };
+    advance();
+  }, []);
+
+  const simulateLC = useCallback(() => {
+    setIsSimulating(true);
+    let step = 0;
+    const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s"];
+
+    const advance = () => {
+      if (step >= lcIssuanceSteps.length) {
+        // LC complete → success
+        setStages((prev) => prev.map((s) =>
+          s.id === 3 ? { ...s, status: "completed" as const, confidence: 100, lastAction: now() } : s
+        ));
+        setOutcome("success");
+        setIsSimulating(false);
+        return;
+      }
+      setLcSteps((prev) => prev.map((s, i) =>
+        i === step ? { ...s, status: "running" as const } : s
+      ));
+      setStages((prev) => prev.map((s) =>
+        s.id === 3 ? { ...s, confidence: Math.round((step / lcIssuanceSteps.length) * 100) } : s
+      ));
+      setTimeout(() => {
+        setLcSteps((prev) => prev.map((s, i) =>
+          i === step ? { ...s, status: "completed" as const, duration: durations[step] } : s
+        ));
+        step++;
+        setTimeout(advance, 600);
+      }, 1500);
+    };
+    advance();
+  }, []);
+
+  const simulateFailure = useCallback(() => {
+    setIsSimulating(true);
+    setOutcome("running");
+    let step = 2;
+    setSanctionSteps((prev) => prev.map((s, i) =>
+      i === 2 ? { ...s, status: "running" as const } : s
+    ));
+    setTimeout(() => {
+      setSanctionSteps((prev) => prev.map((s, i) =>
+        i === 2 ? { ...s, status: "failed" as const, duration: "5.2s" }
+        : i > 2 ? { ...s, status: "pending" as const }
+        : s
+      ));
+      setStages((prev) => prev.map((s) =>
+        s.id === 2 ? { ...s, status: "failed" as const, confidence: 35 } : s
+      ));
+      setOutcome("failed");
+      setIsSimulating(false);
+    }, 2000);
+  }, []);
+
+  const simulateHold = useCallback(() => {
+    setIsSimulating(true);
+    setOutcome("running");
+    setSanctionSteps((prev) => prev.map((s, i) =>
+      i === 2 ? { ...s, status: "running" as const } : s
+    ));
+    setTimeout(() => {
+      setSanctionSteps((prev) => prev.map((s, i) =>
+        i === 2 ? { ...s, status: "hold" as const, duration: "—" }
+        : i > 2 ? { ...s, status: "pending" as const }
+        : s
+      ));
+      setStages((prev) => prev.map((s) =>
+        s.id === 2 ? { ...s, status: "hold" as const, confidence: 52 } : s
+      ));
+      setOutcome("hold");
+      setIsSimulating(false);
+    }, 2000);
+  }, []);
+
+  const handleRetry = () => {
+    // Reset to sanctions running state
+    setSanctionSteps(sanctionsSteps);
+    setLcSteps(lcIssuanceSteps);
+    setStages([
+      { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+      { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: now() },
+      { id: 3, title: "LC Issuance", status: "pending" },
+    ]);
+    setCurrentPhase("sanctions");
+    setOutcome("running");
+  };
 
   const activeStage = stages.find((s) => s.status === "active");
-  const completedSteps = steps.filter((s) => s.status === "completed").length;
-  const progress = (completedSteps / steps.length) * 100;
+  const currentSteps = currentPhase === "sanctions" ? sanctionSteps : lcSteps;
+  const currentTitle = currentPhase === "sanctions"
+    ? "Sanctions Screening & Risk Control"
+    : "LC Issuance";
+
+  const contextContent = currentPhase === "sanctions"
+    ? {
+        whatsHappening: "The system is performing real-time sanctions screening against global watchlists. Counterparty verification is currently underway.",
+        whatToDo: "Wait for automated screening to complete. If a partial match is detected, you will be prompted to review and escalate or clear.",
+        ifNothing: "The transaction will remain in screening state. SLA timer continues. After 24h, it will auto-escalate to compliance supervisor.",
+        documents: ["Application Form.pdf", "Sales Contract.pdf", "Pro-forma Invoice.pdf"],
+      }
+    : {
+        whatsHappening: "LC issuance workflow is validating UCP 600 compliance, checking article-level rules, and verifying trade terms against the contract.",
+        whatToDo: "Monitor the validation progress. Once complete, review the issued LC documents and distribute to relevant parties.",
+        ifNothing: "LC generation will complete automatically. Documents will be locked for audit. Beneficiary notification will be queued.",
+        documents: ["Application Form.pdf", "Sales Contract.pdf", "Pro-forma Invoice.pdf", "Compliance Clearance Report.pdf"],
+      };
 
   return (
     <AppLayout>
@@ -97,149 +217,67 @@ const Workflow = () => {
               LC Amount: <span className="font-medium text-foreground">$2,450,000 USD</span> · {roleName}
             </p>
           </div>
-          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
-            <AlertTriangle className="w-3 h-3 mr-1" /> Screening In Progress
-          </Badge>
+          <div className="flex items-center gap-2">
+            {outcome === "success" && (
+              <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" /> LC Issued
+              </Badge>
+            )}
+            {outcome === "running" && (
+              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
+                <AlertTriangle className="w-3 h-3 mr-1" /> {currentPhase === "sanctions" ? "Screening In Progress" : "LC Issuance In Progress"}
+              </Badge>
+            )}
+            {outcome === "failed" && (
+              <Badge variant="outline" className="bg-destructive/10 text-destructive border-destructive/20 text-xs">
+                Validation Failed
+              </Badge>
+            )}
+            {outcome === "hold" && (
+              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
+                <AlertTriangle className="w-3 h-3 mr-1" /> On Hold
+              </Badge>
+            )}
+          </div>
         </div>
 
         {/* Process Rail */}
-        <div className="rounded-xl border border-border bg-card p-5">
-          <div className="flex items-center gap-2 mb-5">
-            <Scale className="w-4 h-4 text-secondary" />
-            <h3 className="text-sm font-semibold text-foreground">Process Pipeline</h3>
-          </div>
-          <div className="flex items-center gap-0">
-            {stages.map((stage, i) => (
-              <div key={stage.id} className="flex items-center flex-1">
-                <div className={`flex-1 rounded-lg border p-4 transition-all ${
-                  stage.status === "active"
-                    ? "border-primary bg-primary/5 shadow-sm"
-                    : stage.status === "completed"
-                    ? "border-emerald-200 bg-emerald-50/50"
-                    : "border-border bg-muted/20"
-                }`}>
-                  <div className="flex items-center gap-3">
-                    {stageStatusIcon(stage.status)}
-                    <div className="min-w-0">
-                      <p className={`text-xs font-medium ${stage.status === "active" ? "text-primary" : stage.status === "completed" ? "text-emerald-700" : "text-muted-foreground"}`}>
-                        Stage {stage.id}
-                      </p>
-                      <p className="text-sm font-medium text-foreground truncate">{stage.title}</p>
-                    </div>
-                  </div>
-                  {stage.confidence !== undefined && (
-                    <div className="mt-3 flex items-center gap-2">
-                      <Progress value={stage.confidence} className="h-1.5 flex-1" />
-                      <span className="text-[10px] font-mono text-muted-foreground">{stage.confidence}%</span>
-                    </div>
-                  )}
-                  {stage.lastAction && (
-                    <p className="text-[10px] text-muted-foreground mt-2 flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {stage.lastAction}
-                    </p>
-                  )}
-                </div>
-                {i < stages.length - 1 && (
-                  <ChevronRight className="w-5 h-5 text-muted-foreground/30 mx-2 shrink-0" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+        <ProcessRail stages={stages} />
 
-        {/* Active Stage Detail */}
-        {activeStage && (
+        {/* Simulation Controls */}
+        {!isSimulating && outcome === "running" && currentPhase === "sanctions" && (
+          <div className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card">
+            <span className="text-xs text-muted-foreground font-medium">Simulate Outcome:</span>
+            <Button size="sm" onClick={simulateSanctions} className="text-xs gap-1.5">
+              <Play className="w-3.5 h-3.5" /> Run to Success
+            </Button>
+            <Button size="sm" variant="destructive" onClick={simulateFailure} className="text-xs gap-1.5">
+              Simulate Failure
+            </Button>
+            <Button size="sm" variant="outline" onClick={simulateHold} className="text-xs gap-1.5 border-amber-200 text-amber-700 hover:bg-amber-50">
+              Simulate Hold
+            </Button>
+          </div>
+        )}
+
+        {/* Success: LC Documents */}
+        {outcome === "success" && <LCIssuanceResult />}
+
+        {/* Failed: Upload Panel */}
+        {outcome === "failed" && (
+          <FailureUploadPanel type="failed" reasons={failReasons} onRetry={handleRetry} />
+        )}
+
+        {/* Hold: Upload Panel */}
+        {outcome === "hold" && (
+          <FailureUploadPanel type="hold" reasons={holdReasons} onRetry={handleRetry} />
+        )}
+
+        {/* Active Stage Detail (while running) */}
+        {outcome === "running" && (activeStage || isSimulating) && (
           <div className="grid lg:grid-cols-3 gap-6">
-            {/* Execution Log */}
-            <div className="lg:col-span-2 rounded-xl border border-border bg-card p-5">
-              <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-primary" />
-                  <h3 className="text-sm font-semibold text-foreground">{activeStage.title}</h3>
-                </div>
-                <span className="text-xs text-muted-foreground">{completedSteps}/{steps.length} steps completed</span>
-              </div>
-
-              <div className="space-y-1">
-                {steps.map((step, i) => (
-                  <div
-                    key={i}
-                    className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-                      step.status === "running" ? "bg-primary/5" : step.status === "completed" ? "bg-muted/20" : ""
-                    }`}
-                  >
-                    <div className="mt-0.5">{stepIcon(step.status)}</div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className={`text-sm ${step.status === "pending" ? "text-muted-foreground" : "text-foreground"}`}>
-                          {step.label}
-                        </p>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="w-3 h-3 text-muted-foreground/50 hover:text-muted-foreground" />
-                          </TooltipTrigger>
-                          <TooltipContent className="max-w-xs text-xs">{step.explanation}</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      {step.duration && (
-                        <p className="text-[10px] text-muted-foreground mt-0.5 font-mono">{step.duration}</p>
-                      )}
-                    </div>
-                    {step.status === "running" && (
-                      <Badge variant="outline" className="text-[10px] bg-primary/10 text-primary border-primary/20 animate-pulse-soft">
-                        Processing
-                      </Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 pt-4 border-t border-border flex items-center gap-3">
-                <Progress value={progress} className="flex-1 h-2" />
-                <span className="text-xs font-medium text-foreground">{Math.round(progress)}%</span>
-              </div>
-            </div>
-
-            {/* Context Panel */}
-            <div className="space-y-4">
-              {/* What's Happening */}
-              <div className="rounded-xl border border-border bg-card p-5">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">What's Happening</h4>
-                <p className="text-sm text-foreground leading-relaxed">
-                  The system is performing real-time sanctions screening against global watchlists. Counterparty verification is currently underway.
-                </p>
-              </div>
-
-              {/* What Must You Do */}
-              <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">What Must You Do Next</h4>
-                <p className="text-sm text-foreground leading-relaxed">
-                  Wait for automated screening to complete. If a partial match is detected, you will be prompted to review and escalate or clear.
-                </p>
-              </div>
-
-              {/* If You Do Nothing */}
-              <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-5">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-3">If You Do Nothing</h4>
-                <p className="text-sm text-foreground leading-relaxed">
-                  The transaction will remain in screening state. SLA timer continues. After 24h, it will auto-escalate to compliance supervisor.
-                </p>
-              </div>
-
-              {/* Documents */}
-              <div className="rounded-xl border border-border bg-card p-5">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Documents</h4>
-                <div className="space-y-2">
-                  {["Application Form.pdf", "Sales Contract.pdf", "Pro-forma Invoice.pdf"].map((doc) => (
-                    <div key={doc} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 hover:bg-muted/50 cursor-pointer transition-colors">
-                      <FileText className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-xs text-foreground">{doc}</span>
-                      <CheckCircle2 className="w-3 h-3 text-emerald-500 ml-auto" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <ExecutionLog title={currentTitle} steps={currentSteps} />
+            <ContextPanel {...contextContent} />
           </div>
         )}
       </div>

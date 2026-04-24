@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { RoleProvider } from "@/contexts/RoleContext";
 import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
 import Workflow from "./pages/Workflow";
 import Transactions from "./pages/Transactions";
 import CreateTransaction from "./pages/CreateTransaction";
@@ -26,7 +25,6 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/workflow" element={<Workflow />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/create" element={<CreateTransaction />} />

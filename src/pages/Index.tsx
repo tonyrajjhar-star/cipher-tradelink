@@ -45,7 +45,7 @@ const Index = () => {
 
   const handleSelectRole = (roleId: "issuing" | "negotiating") => {
     setRole(roleId);
-    navigate("/dashboard");
+    navigate("/queue");
   };
 
   return (

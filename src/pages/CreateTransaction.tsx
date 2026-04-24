@@ -1,127 +1,99 @@
 import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, FileText, Info, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Upload, FileText, ArrowRight, CheckCircle2, X, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useNavigate } from "react-router-dom";
 
 const CreateTransaction = () => {
-  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
+  const [uploadedFile, setUploadedFile] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleUpload = () => {
-    setUploadedFiles(["Application_Form.pdf", "Sales_Contract.pdf"]);
+    setUploadedFile("Trade_Application_Package.pdf");
   };
 
   return (
     <AppLayout>
       <div className="max-w-3xl mx-auto space-y-6 animate-slide-up">
-        <div>
-          <h2 className="text-2xl font-bold text-foreground">Create Transaction</h2>
-          <p className="text-sm text-muted-foreground mt-1">Initiate a new trade finance transaction. All fields marked with * are mandatory.</p>
-        </div>
-
-        <div className="rounded-xl border border-border bg-card p-6 space-y-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="text-xs font-medium">Applicant Name *</Label>
-              <Input placeholder="Enter applicant name" className="h-10" />
+        {/* Header */}
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-elegant">
+          <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full gradient-brand opacity-10 blur-3xl" />
+          <div className="relative flex items-center gap-4">
+            <div className="icon-3d w-12 h-12 rounded-2xl gradient-brand">
+              <Sparkles className="w-6 h-6 text-white drop-shadow" />
             </div>
-            <div className="space-y-2">
-              <Label className="text-xs font-medium">Beneficiary Name *</Label>
-              <Input placeholder="Enter beneficiary name" className="h-10" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label className="text-xs font-medium">LC Amount *</Label>
-              <Input placeholder="0.00" type="number" className="h-10" />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-xs font-medium">Currency *</Label>
-              <Select>
-                <SelectTrigger className="h-10"><SelectValue placeholder="Select" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="usd">USD</SelectItem>
-                  <SelectItem value="eur">EUR</SelectItem>
-                  <SelectItem value="gbp">GBP</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-xs font-medium">Transaction Type *</Label>
-              <Select>
-                <SelectTrigger className="h-10"><SelectValue placeholder="Select" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="import">Import LC</SelectItem>
-                  <SelectItem value="export">Export LC</SelectItem>
-                  <SelectItem value="standby">Standby LC</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-xs font-medium">Description of Goods</Label>
-            <Textarea placeholder="Describe goods or services covered by this LC…" rows={3} />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="text-xs font-medium">Port of Loading</Label>
-              <Input placeholder="e.g., Shanghai, China" className="h-10" />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-xs font-medium">Port of Discharge</Label>
-              <Input placeholder="e.g., Rotterdam, Netherlands" className="h-10" />
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Create Transaction</h2>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Upload your trade finance application package to initiate a new transaction.
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Document Upload */}
-        <div className="rounded-xl border border-border bg-card p-6">
-          <div className="flex items-center gap-2 mb-4">
+        {/* Upload */}
+        <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
+          <div className="flex items-center gap-2 mb-5">
             <FileText className="w-4 h-4 text-primary" />
-            <h3 className="text-sm font-semibold text-foreground">Supporting Documents</h3>
-            <Tooltip>
-              <TooltipTrigger><Info className="w-3.5 h-3.5 text-muted-foreground" /></TooltipTrigger>
-              <TooltipContent className="text-xs max-w-xs">Upload application form, sales contract, pro-forma invoice, and any additional supporting documents.</TooltipContent>
-            </Tooltip>
+            <h3 className="text-sm font-semibold text-foreground">Application Document</h3>
+            <Badge variant="outline" className="text-[10px] ml-auto bg-gradient-to-r from-primary/10 to-secondary/10 text-secondary border-primary/20">
+              Required
+            </Badge>
           </div>
 
-          {uploadedFiles.length === 0 ? (
+          {!uploadedFile ? (
             <div
-              className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-primary/40 hover:bg-primary/5 transition-colors"
+              className="relative border-2 border-dashed border-border rounded-2xl p-12 text-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all group"
               onClick={handleUpload}
             >
-              <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-              <p className="text-sm font-medium text-foreground">Drop files here or click to upload</p>
-              <p className="text-xs text-muted-foreground mt-1">PDF, DOC, XLSX — Max 25MB per file</p>
+              <div className="absolute inset-0 rounded-2xl gradient-brand-soft opacity-0 group-hover:opacity-60 transition-opacity" />
+              <div className="relative">
+                <div className="icon-3d w-16 h-16 rounded-2xl gradient-brand mx-auto mb-4">
+                  <Upload className="w-8 h-8 text-white drop-shadow" />
+                </div>
+                <p className="text-base font-semibold text-foreground">Drop your file here or click to upload</p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  PDF, DOC, XLSX — Max 25 MB
+                </p>
+                <p className="text-[11px] text-muted-foreground/70 mt-3 max-w-sm mx-auto">
+                  Upload a single consolidated document containing application form, sales contract, and supporting evidence.
+                </p>
+              </div>
             </div>
           ) : (
-            <div className="space-y-2">
-              {uploadedFiles.map((f) => (
-                <div key={f} className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                  <FileText className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-foreground flex-1">{f}</span>
-                  <Badge variant="outline" className="text-[10px] bg-emerald-50 text-emerald-700 border-emerald-200">
+            <div className="flex items-center gap-4 p-5 rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50/60 to-emerald-50/20">
+              <div className="icon-3d w-12 h-12 rounded-xl gradient-success">
+                <FileText className="w-5 h-5 text-white drop-shadow" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-foreground truncate">{uploadedFile}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <Badge variant="outline" className="text-[10px] bg-white text-emerald-700 border-emerald-200">
                     <CheckCircle2 className="w-3 h-3 mr-1" /> Uploaded
                   </Badge>
+                  <span className="text-[11px] text-muted-foreground">2.4 MB · just now</span>
                 </div>
-              ))}
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-destructive"
+                onClick={() => setUploadedFile(null)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
           )}
         </div>
 
         <div className="flex justify-end gap-3">
           <Button variant="outline">Save as Draft</Button>
-          <Button className="gap-1.5" onClick={() => navigate("/workflow")}>
+          <Button
+            disabled={!uploadedFile}
+            className="gap-1.5 gradient-brand text-white border-0 shadow-elegant hover:opacity-90"
+            onClick={() => navigate("/workflow")}
+          >
             Run Pre-Issuance Validation <ArrowRight className="w-4 h-4" />
           </Button>
         </div>

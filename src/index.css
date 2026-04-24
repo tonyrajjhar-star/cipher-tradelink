@@ -126,4 +126,55 @@
   .status-info {
     @apply bg-sky-50 text-sky-700 border-sky-200;
   }
+
+  .gradient-brand {
+    background-image: linear-gradient(135deg, hsl(216 92% 65%) 0%, hsl(237 51% 42%) 100%);
+  }
+
+  .gradient-brand-soft {
+    background-image: linear-gradient(135deg, hsl(216 92% 97%) 0%, hsl(237 51% 96%) 100%);
+  }
+
+  .gradient-mesh {
+    background-color: hsl(0 0% 100%);
+    background-image:
+      radial-gradient(at 12% 8%, hsl(216 92% 65% / 0.10) 0px, transparent 45%),
+      radial-gradient(at 88% 12%, hsl(270 60% 55% / 0.08) 0px, transparent 45%),
+      radial-gradient(at 65% 92%, hsl(237 51% 42% / 0.10) 0px, transparent 50%);
+  }
+
+  .gradient-success {
+    background-image: linear-gradient(135deg, hsl(152 60% 52%) 0%, hsl(160 60% 38%) 100%);
+  }
+
+  .gradient-warning {
+    background-image: linear-gradient(135deg, hsl(38 92% 60%) 0%, hsl(28 92% 50%) 100%);
+  }
+
+  .gradient-danger {
+    background-image: linear-gradient(135deg, hsl(0 84% 65%) 0%, hsl(355 78% 48%) 100%);
+  }
+
+  .shadow-elegant {
+    box-shadow: 0 10px 30px -12px hsl(237 51% 42% / 0.18), 0 2px 6px -2px hsl(237 51% 42% / 0.06);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 0 1px hsl(216 92% 65% / 0.10), 0 8px 30px -8px hsl(216 92% 65% / 0.40);
+  }
+
+  .icon-3d {
+    @apply relative inline-flex items-center justify-center;
+  }
+  .icon-3d::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    filter: blur(14px);
+    opacity: 0.55;
+    transform: translateY(6px) scale(0.92);
+    z-index: -1;
+  }
 }

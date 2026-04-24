@@ -42,16 +42,24 @@ const holdReasons = [
 ];
 
 const Workflow = () => {
-  const { roleName } = useRole();
-  const [currentPhase, setCurrentPhase] = useState<"sanctions" | "lc">("sanctions");
+  const { role, roleName } = useRole();
+  const isNegotiating = role === "negotiating";
+  const [currentPhase, setCurrentPhase] = useState<"sanctions" | "lc">(isNegotiating ? "lc" : "sanctions");
   const [outcome, setOutcome] = useState<WorkflowOutcome>("running");
   const [sanctionSteps, setSanctionSteps] = useState<ValidationStep[]>(sanctionsSteps);
   const [lcSteps, setLcSteps] = useState<ValidationStep[]>(lcIssuanceSteps);
-  const [stages, setStages] = useState<Stage[]>([
-    { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-    { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: "Apr 10, 15:01" },
-    { id: 3, title: "LC Issuance", status: "pending" },
-  ]);
+  const [stages, setStages] = useState<Stage[]>(
+    isNegotiating
+      ? [
+          { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+          { id: 2, title: "LC Issuance", status: "active", confidence: 0, lastAction: "Apr 10, 15:01" },
+        ]
+      : [
+          { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+          { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: "Apr 10, 15:01" },
+          { id: 3, title: "LC Issuance", status: "pending" },
+        ]
+  );
   const [isSimulating, setIsSimulating] = useState(false);
 
   const now = () => {

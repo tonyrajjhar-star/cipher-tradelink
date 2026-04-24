@@ -204,40 +204,47 @@ const Workflow = () => {
   return (
     <AppLayout>
       <div className="space-y-6 animate-slide-up">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-              <span>Transactions</span>
-              <ChevronRight className="w-3 h-3" />
-              <span className="text-foreground font-medium">TXN-2026-0841</span>
+        {/* Header — Rosano style */}
+        <div className="relative overflow-hidden rounded-lg bg-card border border-border shadow-sm">
+          <div className="absolute top-0 left-0 bottom-0 w-1 bg-secondary" />
+          <div className="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-accent/70 blur-3xl" />
+          <div className="relative p-6 flex items-start justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                <span className="uppercase tracking-widest">Transaction</span>
+                <ChevronRight className="w-3 h-3" />
+                <span className="text-foreground font-semibold">TXN-2026-0841</span>
+              </div>
+              <h2 className="text-2xl font-bold text-foreground">Al Rajhi Trading Co.</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                LC Amount: <span className="font-semibold text-foreground">$2,450,000 USD</span>
+                <span className="mx-2 text-border">·</span>
+                <span className="text-secondary font-medium">{roleName}</span>
+              </p>
             </div>
-            <h2 className="text-2xl font-bold text-foreground">Al Rajhi Trading Co.</h2>
-            <p className="text-sm text-muted-foreground mt-0.5">
-              LC Amount: <span className="font-medium text-foreground">$2,450,000 USD</span> · {roleName}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            {outcome === "success" && (
-              <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs">
-                <CheckCircle2 className="w-3 h-3 mr-1" /> LC Issued
-              </Badge>
-            )}
-            {outcome === "running" && (
-              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
-                <AlertTriangle className="w-3 h-3 mr-1" /> {currentPhase === "sanctions" ? "Screening In Progress" : "LC Issuance In Progress"}
-              </Badge>
-            )}
-            {outcome === "failed" && (
-              <Badge variant="outline" className="bg-destructive/10 text-destructive border-destructive/20 text-xs">
-                Validation Failed
-              </Badge>
-            )}
-            {outcome === "hold" && (
-              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
-                <AlertTriangle className="w-3 h-3 mr-1" /> On Hold
-              </Badge>
-            )}
+            <div className="flex items-center gap-2">
+              {outcome === "success" && (
+                <Badge className="bg-secondary text-secondary-foreground border-0 text-xs uppercase tracking-wider">
+                  <CheckCircle2 className="w-3 h-3 mr-1" /> LC Issued
+                </Badge>
+              )}
+              {outcome === "running" && (
+                <Badge variant="outline" className="bg-accent text-primary border-secondary/30 text-xs uppercase tracking-wider">
+                  <AlertTriangle className="w-3 h-3 mr-1" />
+                  {currentPhase === "sanctions" ? "Screening" : "LC Issuance"}
+                </Badge>
+              )}
+              {outcome === "failed" && (
+                <Badge variant="outline" className="bg-destructive/10 text-destructive border-destructive/20 text-xs uppercase tracking-wider">
+                  Validation Failed
+                </Badge>
+              )}
+              {outcome === "hold" && (
+                <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs uppercase tracking-wider">
+                  <AlertTriangle className="w-3 h-3 mr-1" /> On Hold
+                </Badge>
+              )}
+            </div>
           </div>
         </div>
 
@@ -246,15 +253,18 @@ const Workflow = () => {
 
         {/* Simulation Controls */}
         {!isSimulating && outcome === "running" && currentPhase === "sanctions" && (
-          <div className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card">
-            <span className="text-xs text-muted-foreground font-medium">Simulate Outcome:</span>
-            <Button size="sm" onClick={simulateSanctions} className="text-xs gap-1.5">
+          <div className="flex flex-wrap items-center gap-3 p-4 rounded-lg border border-border bg-card shadow-sm">
+            <div className="flex items-center gap-2 mr-2">
+              <div className="w-1 h-5 bg-secondary rounded-full" />
+              <span className="text-xs text-foreground font-semibold uppercase tracking-wider">Simulate Outcome</span>
+            </div>
+            <Button size="sm" onClick={simulateSanctions} className="text-xs gap-1.5 bg-secondary hover:bg-secondary/90 text-secondary-foreground">
               <Play className="w-3.5 h-3.5" /> Run to Success
             </Button>
             <Button size="sm" variant="destructive" onClick={simulateFailure} className="text-xs gap-1.5">
               Simulate Failure
             </Button>
-            <Button size="sm" variant="outline" onClick={simulateHold} className="text-xs gap-1.5 border-amber-200 text-amber-700 hover:bg-amber-50">
+            <Button size="sm" variant="outline" onClick={simulateHold} className="text-xs gap-1.5 border-amber-300 text-amber-700 hover:bg-amber-50">
               Simulate Hold
             </Button>
           </div>

@@ -302,13 +302,17 @@ const Workflow = () => {
         <ProcessRail stages={stages} />
 
         {/* Simulation Controls */}
-        {!isSimulating && outcome === "running" && currentPhase === "sanctions" && (
+        {!isSimulating && outcome === "running" && (
           <div className="flex flex-wrap items-center gap-3 p-4 rounded-lg border border-border bg-card shadow-sm">
             <div className="flex items-center gap-2 mr-2">
               <div className="w-1 h-5 bg-secondary rounded-full" />
               <span className="text-xs text-foreground font-semibold uppercase tracking-wider">Simulate Outcome</span>
             </div>
-            <Button size="sm" onClick={simulateSanctions} className="text-xs gap-1.5 bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+            <Button
+              size="sm"
+              onClick={isNegotiating ? simulateLC : simulateSanctions}
+              className="text-xs gap-1.5 bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+            >
               <Play className="w-3.5 h-3.5" /> Run to Success
             </Button>
             <Button size="sm" variant="destructive" onClick={simulateFailure} className="text-xs gap-1.5">
@@ -321,7 +325,7 @@ const Workflow = () => {
         )}
 
         {/* Success: LC Documents */}
-        {outcome === "success" && <LCIssuanceResult />}
+        {outcome === "success" && <LCIssuanceResult format={isNegotiating ? "excel" : "pdf"} />}
 
         {/* Failed: Upload Panel */}
         {outcome === "failed" && (

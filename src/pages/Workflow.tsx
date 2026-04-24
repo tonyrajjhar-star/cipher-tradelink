@@ -105,14 +105,16 @@ const Workflow = () => {
 
   const simulateLC = useCallback(() => {
     setIsSimulating(true);
+    setOutcome("running");
     let step = 0;
     const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s"];
+    const lcStageId = isNegotiating ? 2 : 3;
 
     const advance = () => {
       if (step >= lcIssuanceSteps.length) {
         // LC complete → success
         setStages((prev) => prev.map((s) =>
-          s.id === 3 ? { ...s, status: "completed" as const, confidence: 100, lastAction: now() } : s
+          s.id === lcStageId ? { ...s, status: "completed" as const, confidence: 100, lastAction: now() } : s
         ));
         setOutcome("success");
         setIsSimulating(false);
@@ -122,7 +124,7 @@ const Workflow = () => {
         i === step ? { ...s, status: "running" as const } : s
       ));
       setStages((prev) => prev.map((s) =>
-        s.id === 3 ? { ...s, confidence: Math.round((step / lcIssuanceSteps.length) * 100) } : s
+        s.id === lcStageId ? { ...s, confidence: Math.round((step / lcIssuanceSteps.length) * 100) } : s
       ));
       setTimeout(() => {
         setLcSteps((prev) => prev.map((s, i) =>
@@ -133,7 +135,7 @@ const Workflow = () => {
       }, 1500);
     };
     advance();
-  }, []);
+  }, [isNegotiating]);
 
   const simulateFailure = useCallback(() => {
     setIsSimulating(true);

@@ -16,53 +16,53 @@
     --popover: 0 0% 100%;
     --popover-foreground: 226 60% 14%;
 
-    /* Primary: deep navy blue (Rosano signature) */
-    --primary: 230 65% 24%;
+    /* Primary: medium navy blue (medium brightness) */
+    --primary: 225 50% 42%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: vivid orange accent */
-    --secondary: 22 92% 55%;
+    /* Secondary: medium-bright orange accent */
+    --secondary: 22 75% 62%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 25% 97%;
-    --muted-foreground: 226 15% 45%;
+    --muted: 220 22% 96%;
+    --muted-foreground: 226 12% 48%;
 
-    /* Accent: warm peach (matches Rosano illustration backdrops) */
-    --accent: 24 100% 94%;
-    --accent-foreground: 230 65% 24%;
+    /* Accent: soft warm peach at medium brightness */
+    --accent: 24 75% 90%;
+    --accent-foreground: 225 50% 42%;
 
-    --destructive: 0 75% 50%;
+    --destructive: 0 65% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 152 60% 42%;
+    --success: 152 45% 50%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 92% 50%;
+    --warning: 38 80% 60%;
     --warning-foreground: 0 0% 100%;
 
-    --hold: 38 92% 50%;
-    --hold-foreground: 38 92% 10%;
+    --hold: 38 80% 60%;
+    --hold-foreground: 38 80% 15%;
 
-    --brand-core: 230 65% 24%;
-    --brand-indigo: 230 55% 30%;
-    --brand-dark: 230 70% 16%;
-    --brand-orange: 22 92% 55%;
-    --brand-orange-soft: 24 100% 94%;
+    --brand-core: 225 50% 42%;
+    --brand-indigo: 225 45% 48%;
+    --brand-dark: 225 55% 32%;
+    --brand-orange: 22 75% 62%;
+    --brand-orange-soft: 24 75% 90%;
 
-    --border: 220 22% 92%;
-    --input: 220 22% 92%;
-    --ring: 230 65% 24%;
+    --border: 220 20% 90%;
+    --input: 220 20% 90%;
+    --ring: 225 50% 42%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 230 65% 24%;
+    --sidebar-background: 225 50% 42%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 22 92% 55%;
+    --sidebar-primary: 22 75% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 230 55% 30%;
+    --sidebar-accent: 225 45% 48%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 230 50% 32%;
-    --sidebar-ring: 22 92% 55%;
+    --sidebar-border: 225 40% 50%;
+    --sidebar-ring: 22 75% 62%;
   }
 
   .dark {
@@ -134,51 +134,51 @@
   }
 
   .gradient-brand {
-    background-image: linear-gradient(135deg, hsl(230 65% 28%) 0%, hsl(230 70% 16%) 100%);
+    background-image: linear-gradient(135deg, hsl(225 50% 48%) 0%, hsl(225 55% 32%) 100%);
   }
 
   .gradient-brand-soft {
-    background-image: linear-gradient(135deg, hsl(230 65% 97%) 0%, hsl(230 55% 95%) 100%);
+    background-image: linear-gradient(135deg, hsl(225 45% 96%) 0%, hsl(225 40% 94%) 100%);
   }
 
   .gradient-orange {
-    background-image: linear-gradient(135deg, hsl(22 95% 60%) 0%, hsl(18 90% 50%) 100%);
+    background-image: linear-gradient(135deg, hsl(22 78% 65%) 0%, hsl(18 72% 55%) 100%);
   }
 
   .gradient-peach {
-    background-image: radial-gradient(circle at 35% 35%, hsl(24 100% 94%) 0%, hsl(24 100% 96%) 60%, transparent 100%);
+    background-image: radial-gradient(circle at 35% 35%, hsl(24 75% 90%) 0%, hsl(24 75% 94%) 60%, transparent 100%);
   }
 
   .gradient-mesh {
     background-color: hsl(0 0% 100%);
     background-image:
-      radial-gradient(at 8% 5%, hsl(24 100% 92% / 0.55) 0px, transparent 42%),
-      radial-gradient(at 92% 8%, hsl(230 65% 24% / 0.06) 0px, transparent 45%),
-      radial-gradient(at 70% 95%, hsl(22 92% 55% / 0.07) 0px, transparent 50%);
+      radial-gradient(at 8% 5%, hsl(24 75% 88% / 0.55) 0px, transparent 42%),
+      radial-gradient(at 92% 8%, hsl(225 50% 42% / 0.06) 0px, transparent 45%),
+      radial-gradient(at 70% 95%, hsl(22 75% 62% / 0.07) 0px, transparent 50%);
   }
 
   .gradient-success {
-    background-image: linear-gradient(135deg, hsl(152 60% 52%) 0%, hsl(160 60% 38%) 100%);
+    background-image: linear-gradient(135deg, hsl(152 50% 56%) 0%, hsl(160 50% 44%) 100%);
   }
 
   .gradient-warning {
-    background-image: linear-gradient(135deg, hsl(38 92% 60%) 0%, hsl(28 92% 50%) 100%);
+    background-image: linear-gradient(135deg, hsl(38 80% 65%) 0%, hsl(28 78% 55%) 100%);
   }
 
   .gradient-danger {
-    background-image: linear-gradient(135deg, hsl(0 84% 65%) 0%, hsl(355 78% 48%) 100%);
+    background-image: linear-gradient(135deg, hsl(0 70% 68%) 0%, hsl(355 65% 55%) 100%);
   }
 
   .shadow-elegant {
-    box-shadow: 0 10px 30px -12px hsl(230 65% 24% / 0.20), 0 2px 6px -2px hsl(230 65% 24% / 0.08);
+    box-shadow: 0 10px 30px -12px hsl(225 50% 42% / 0.18), 0 2px 6px -2px hsl(225 50% 42% / 0.08);
   }
 
   .shadow-glow {
-    box-shadow: 0 0 0 1px hsl(22 92% 55% / 0.12), 0 8px 30px -8px hsl(22 92% 55% / 0.40);
+    box-shadow: 0 0 0 1px hsl(22 75% 62% / 0.12), 0 8px 30px -8px hsl(22 75% 62% / 0.35);
   }
 
   .shadow-orange {
-    box-shadow: 0 10px 30px -12px hsl(22 92% 55% / 0.45), 0 2px 6px -2px hsl(22 92% 55% / 0.18);
+    box-shadow: 0 10px 30px -12px hsl(22 75% 62% / 0.40), 0 2px 6px -2px hsl(22 75% 62% / 0.16);
   }
 
   /* Rosano-style accent bar (left orange divider) */
@@ -189,7 +189,7 @@
     bottom: 0;
     left: 0;
     width: 4px;
-    background: hsl(22 92% 55%);
+    background: hsl(22 75% 62%);
   }
 
   .icon-3d {

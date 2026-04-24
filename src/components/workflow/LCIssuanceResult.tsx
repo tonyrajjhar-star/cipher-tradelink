@@ -74,4 +74,6 @@ export const LCIssuanceResult = ({ format = "pdf" }: LCIssuanceResultProps) => {
       </div>
     </div>
   </div>
-);
+  );
+};
+

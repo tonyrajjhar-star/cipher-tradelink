@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRole } from "@/contexts/RoleContext";
-import { Shield, Landmark, ArrowRight, Info, FileCheck, Scale, Sparkles } from "lucide-react";
+import { Shield, Landmark, ArrowRight, Info, FileCheck, Triangle, Phone, Globe2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useState } from "react";
@@ -10,31 +10,35 @@ const roles = [
     id: "issuing" as const,
     title: "Issuing Bank",
     icon: Landmark,
-    description: "Originate and issue Letters of Credit on behalf of applicants. Manage compliance, sanctions screening, and LC lifecycle.",
+    tagline: "Originate. Issue. Govern.",
+    description:
+      "Originate and issue Letters of Credit on behalf of applicants. Manage compliance, sanctions screening, and the full LC lifecycle.",
     responsibilities: [
       "Application intake & contract validation",
       "Sanctions screening & AML compliance",
       "LC issuance under UCP 600",
       "Document examination & settlement",
     ],
-    regulatory: "Full regulatory accountability under UCP 600, local AML/CFT regulations, and OFAC/EU sanctions frameworks.",
-    gradient: "from-[hsl(216,92%,65%)] to-[hsl(237,51%,42%)]",
-    bgGradient: "from-[hsl(216,92%,65%)]/8 to-[hsl(237,51%,42%)]/4",
+    regulatory:
+      "Full regulatory accountability under UCP 600, local AML/CFT regulations, and OFAC/EU sanctions frameworks.",
+    accent: "primary",
   },
   {
     id: "negotiating" as const,
     title: "Negotiating Bank",
     icon: FileCheck,
-    description: "Act on behalf of beneficiaries. Verify document compliance, negotiate discrepancies, and facilitate payment under LC terms.",
+    tagline: "Verify. Negotiate. Settle.",
+    description:
+      "Act on behalf of beneficiaries. Verify document compliance, negotiate discrepancies, and facilitate payment under LC terms.",
     responsibilities: [
       "Document receipt & compliance verification",
       "Discrepancy identification & client advisory",
       "Negotiation & payment facilitation",
       "Evidence tagging & audit trail",
     ],
-    regulatory: "Accountability for document verification accuracy, beneficiary due diligence, and adherence to issuing bank instructions.",
-    gradient: "from-[hsl(270,60%,55%)] to-[hsl(237,51%,42%)]",
-    bgGradient: "from-[hsl(270,60%,55%)]/8 to-[hsl(237,51%,42%)]/4",
+    regulatory:
+      "Accountability for document verification accuracy, beneficiary due diligence, and adherence to issuing bank instructions.",
+    accent: "secondary",
   },
 ];
 
@@ -45,130 +49,207 @@ const Index = () => {
 
   const handleSelectRole = (roleId: "issuing" | "negotiating") => {
     setRole(roleId);
-    navigate("/queue");
+    navigate("/create");
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="border-b border-border/60 bg-card/80 backdrop-blur-sm">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[hsl(216,92%,65%)] to-[hsl(237,51%,42%)] opacity-40 blur-lg translate-y-1" />
-              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(216,92%,65%)] to-[hsl(237,51%,42%)] flex items-center justify-center shadow-lg">
-                <Scale className="w-5 h-5 text-white drop-shadow-sm" />
-              </div>
+      {/* Top utility bar — Rosano style */}
+      <div className="bg-muted/60 border-b border-border">
+        <div className="container mx-auto px-6 py-2 flex items-center justify-between text-[11px]">
+          <div className="hidden md:flex items-center gap-6 text-muted-foreground uppercase tracking-widest font-medium">
+            <a href="#" className="hover:text-secondary transition-colors">Contact</a>
+            <a href="#" className="hover:text-secondary transition-colors">Locations</a>
+            <a href="#" className="hover:text-secondary transition-colors">FAQ</a>
+            <a href="#" className="hover:text-secondary transition-colors">Compliance</a>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground ml-auto">
+            <Phone className="w-3 h-3" />
+            <span>24/7 Trade Support</span>
+            <span className="font-bold text-foreground">+1 (234) 500 0975</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Header — Rosano style: navy block + orange divider + nav */}
+      <header className="border-b border-border bg-card relative">
+        <div className="flex items-stretch">
+          {/* Brand block (navy) */}
+          <div className="bg-primary text-primary-foreground px-8 py-5 flex items-center gap-3 relative">
+            <div className="relative w-11 h-11 flex items-center justify-center">
+              <Triangle className="absolute w-10 h-10 text-secondary" strokeWidth={2.5} />
+              <Triangle className="w-5 h-5 text-secondary fill-secondary" strokeWidth={2.5} />
             </div>
             <div>
-              <h1 className="text-lg font-semibold text-foreground tracking-tight">TradeFlow</h1>
-              <p className="text-xs text-muted-foreground">Trade Finance Platform</p>
+              <h1 className="text-xl font-bold tracking-wider">TRADEFLOW</h1>
+              <p className="text-[10px] text-primary-foreground/70 uppercase tracking-widest">Banking for Trade</p>
             </div>
+            {/* Orange divider edge */}
+            <div className="absolute top-0 bottom-0 -right-1 w-1 bg-secondary" />
           </div>
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs text-muted-foreground">Enterprise Edition v3.2</span>
-          </div>
+
+          {/* Nav */}
+          <nav className="flex-1 flex items-center justify-end gap-8 px-8">
+            <a className="text-sm font-semibold text-secondary">[ Home ]</a>
+            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">About</a>
+            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">Services</a>
+            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">Compliance</a>
+            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">Contact</a>
+          </nav>
         </div>
       </header>
 
-      {/* Main */}
-      <main className="flex-1 flex items-center justify-center px-6 py-16 relative overflow-hidden">
-        {/* Background decorative gradients */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-secondary/10 to-transparent rounded-full blur-3xl" />
+      {/* Hero */}
+      <main className="flex-1 relative overflow-hidden">
+        {/* Decorative peach blobs (Rosano signature) */}
+        <div className="absolute top-20 -left-32 w-96 h-96 rounded-full bg-accent/70 blur-3xl" />
+        <div className="absolute bottom-10 -right-32 w-96 h-96 rounded-full bg-accent/60 blur-3xl" />
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-secondary/5 blur-3xl" />
 
-        <div className="max-w-4xl w-full relative">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 mb-4">
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
-              <p className="text-xs font-medium uppercase tracking-widest text-primary">Import & Export</p>
+        <div className="container mx-auto px-6 py-14 relative">
+          {/* Eyebrow */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="w-8 h-0.5 bg-secondary" />
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
+                Simple & Secure Trade Banking
+              </span>
+              <span className="w-8 h-0.5 bg-secondary" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Select Your Operating Role
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
+              We Power <span className="text-secondary">Stronger</span> Trade
+              <br /> Across Borders & Banks
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-sm leading-relaxed">
-              Your role determines workflow scope, regulatory responsibilities, and available actions.
-              Select carefully — role changes require supervisor authorization.
+            <p className="text-muted-foreground max-w-2xl mx-auto text-sm leading-relaxed">
+              Select your operating role to enter the workflow. Your role determines scope,
+              regulatory responsibilities, and available actions. Role changes require supervisor authorization.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {roles.map((role) => {
+          {/* Role cards */}
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {roles.map((role, idx) => {
               const Icon = role.icon;
               const isHovered = hoveredRole === role.id;
+              const isOrange = role.accent === "secondary";
 
               return (
                 <div
                   key={role.id}
-                  className={`relative group rounded-2xl border bg-card p-6 transition-all duration-300 cursor-pointer overflow-hidden ${
-                    isHovered
-                      ? "border-primary/50 shadow-xl shadow-primary/10 -translate-y-1.5"
-                      : "border-border hover:border-primary/30"
+                  className={`relative group bg-card border border-border transition-all duration-300 cursor-pointer overflow-hidden ${
+                    isHovered ? "shadow-elegant -translate-y-1" : "shadow-sm"
                   }`}
                   onMouseEnter={() => setHoveredRole(role.id)}
                   onMouseLeave={() => setHoveredRole(null)}
                   onClick={() => handleSelectRole(role.id)}
                 >
-                  {/* Background gradient wash */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${role.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  {/* Step number badge (Rosano style) */}
+                  <div className="absolute top-5 left-5 z-10">
+                    <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold shadow-elegant">
+                      {idx + 1}
+                    </div>
+                  </div>
 
-                  <div className="relative">
-                    {/* 3D Icon */}
-                    <div className="relative w-14 h-14 mb-5">
-                      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${role.gradient} opacity-40 blur-lg translate-y-1`} />
-                      <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${role.gradient} flex items-center justify-center shadow-lg`}>
-                        <Icon className="w-7 h-7 text-white drop-shadow-sm" />
+                  {/* Peach circle backdrop with 3D icon */}
+                  <div className="relative pt-12 pb-6 px-8 flex items-center justify-center">
+                    <div className="relative w-40 h-40 flex items-center justify-center">
+                      <div className={`absolute inset-0 rounded-full ${isOrange ? "bg-secondary/15" : "bg-accent"}`} />
+                      <div className={`absolute inset-4 rounded-full ${isOrange ? "bg-secondary/10" : "bg-accent/60"}`} />
+                      {/* 3D icon */}
+                      <div className="relative">
+                        <div className={`absolute inset-0 ${isOrange ? "bg-secondary" : "bg-primary"} rounded-2xl blur-xl opacity-40 translate-y-2`} />
+                        <div className={`relative w-20 h-20 rounded-2xl ${isOrange ? "bg-secondary" : "bg-primary"} flex items-center justify-center shadow-elegant`}>
+                          <Icon className="w-10 h-10 text-white drop-shadow" strokeWidth={1.8} />
+                        </div>
                       </div>
                     </div>
+                  </div>
 
-                    <h3 className="text-xl font-semibold text-foreground mb-2">{role.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{role.description}</p>
+                  <div className="px-8 pb-8">
+                    {/* Title */}
+                    <div className="text-center mb-4">
+                      <p className={`text-[10px] uppercase tracking-[0.25em] mb-1 ${isOrange ? "text-secondary" : "text-primary"} font-semibold`}>
+                        {role.tagline}
+                      </p>
+                      <h3 className="text-2xl font-bold text-foreground">{role.title}</h3>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground mb-5 text-center leading-relaxed">
+                      {role.description}
+                    </p>
 
                     {/* Responsibilities */}
-                    <div className="mb-5">
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                    <div className="mb-5 border-t border-border pt-5">
+                      <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3 text-center">
                         Key Responsibilities
                       </h4>
-                      <ul className="space-y-1.5">
+                      <ul className="space-y-2">
                         {role.responsibilities.map((r) => (
-                          <li key={r} className="text-sm text-foreground flex items-start gap-2">
-                            <Shield className="w-3.5 h-3.5 mt-0.5 text-primary shrink-0" />
-                            {r}
+                          <li key={r} className="text-sm text-foreground flex items-start gap-2.5">
+                            <Shield className={`w-3.5 h-3.5 mt-0.5 ${isOrange ? "text-secondary" : "text-primary"} shrink-0`} />
+                            <span>{r}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    {/* Regulatory */}
-                    <div className="rounded-xl bg-muted/50 p-3 mb-5 border border-border/50">
+                    {/* Regulatory note */}
+                    <div className="rounded-md bg-muted/60 p-3 mb-5 border-l-2 border-secondary">
                       <div className="flex items-start gap-2">
                         <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="w-3.5 h-3.5 mt-0.5 text-muted-foreground" />
+                          <TooltipTrigger asChild>
+                            <Info className="w-3.5 h-3.5 mt-0.5 text-muted-foreground shrink-0 cursor-help" />
                           </TooltipTrigger>
                           <TooltipContent className="max-w-xs">
                             <p className="text-xs">Regulatory accountability is non-transferable and subject to audit.</p>
                           </TooltipContent>
                         </Tooltip>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{role.regulatory}</p>
+                        <p className="text-[11px] text-muted-foreground leading-relaxed">{role.regulatory}</p>
                       </div>
                     </div>
 
                     {/* CTA */}
-                    <Button className={`w-full group/btn bg-gradient-to-r ${role.gradient} hover:opacity-90 text-white border-0`}>
+                    <Button
+                      className={`w-full h-12 group/btn rounded-md text-sm font-semibold ${
+                        isOrange
+                          ? "bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+                          : "bg-primary hover:bg-primary/90 text-primary-foreground"
+                      }`}
+                    >
                       Proceed as {role.title}
-                      <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" />
+                      <span className={`ml-2 inline-flex items-center justify-center w-7 h-7 rounded-full ${isOrange ? "bg-white/20" : "bg-white/20"} transition-transform group-hover/btn:translate-x-1`}>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
                     </Button>
                   </div>
                 </div>
               );
             })}
           </div>
+
+          {/* Trust strip */}
+          <div className="max-w-5xl mx-auto mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { v: "UCP 600", l: "Compliant" },
+              { v: "OFAC / EU", l: "Sanctions Screened" },
+              { v: "ISO 27001", l: "Certified Platform" },
+              { v: "24/7", l: "Operations" },
+            ].map((t) => (
+              <div key={t.v} className="bg-card border border-border rounded-md px-4 py-3 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+                  <Globe2 className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-foreground">{t.v}</div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wider">{t.l}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
 
-      <footer className="border-t border-border/40 py-4 text-center text-xs text-muted-foreground">
+      <footer className="border-t border-border py-4 text-center text-[11px] text-muted-foreground bg-card">
         © 2026 TradeFlow — All transactions are logged and subject to regulatory audit
       </footer>
     </div>

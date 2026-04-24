@@ -6,11 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { RoleProvider } from "@/contexts/RoleContext";
 import Index from "./pages/Index";
 import Workflow from "./pages/Workflow";
-import Transactions from "./pages/Transactions";
 import CreateTransaction from "./pages/CreateTransaction";
-import Compliance from "./pages/Compliance";
-import Reports from "./pages/Reports";
-import WorkQueue from "./pages/WorkQueue";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 
@@ -25,12 +21,8 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/workflow" element={<Workflow />} />
-            <Route path="/transactions" element={<Transactions />} />
             <Route path="/create" element={<CreateTransaction />} />
-            <Route path="/compliance" element={<Compliance />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/queue" element={<WorkQueue />} />
+            <Route path="/workflow" element={<Workflow />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -41,3 +33,4 @@ const App = () => (
 );
 
 export default App;
+

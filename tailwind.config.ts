@@ -61,6 +61,8 @@ export default {
           core: "hsl(var(--brand-core))",
           indigo: "hsl(var(--brand-indigo))",
           dark: "hsl(var(--brand-dark))",
+          orange: "hsl(var(--brand-orange))",
+          "orange-soft": "hsl(var(--brand-orange-soft))",
         },
         success: {
           DEFAULT: "hsl(var(--success))",

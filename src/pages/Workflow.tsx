@@ -140,7 +140,24 @@ const Workflow = () => {
   const simulateFailure = useCallback(() => {
     setIsSimulating(true);
     setOutcome("running");
-    let step = 2;
+    if (isNegotiating) {
+      setLcSteps((prev) => prev.map((s, i) =>
+        i === 1 ? { ...s, status: "running" as const } : s
+      ));
+      setTimeout(() => {
+        setLcSteps((prev) => prev.map((s, i) =>
+          i === 1 ? { ...s, status: "failed" as const, duration: "4.6s" }
+          : i > 1 ? { ...s, status: "pending" as const }
+          : s
+        ));
+        setStages((prev) => prev.map((s) =>
+          s.id === 2 ? { ...s, status: "failed" as const, confidence: 35 } : s
+        ));
+        setOutcome("failed");
+        setIsSimulating(false);
+      }, 2000);
+      return;
+    }
     setSanctionSteps((prev) => prev.map((s, i) =>
       i === 2 ? { ...s, status: "running" as const } : s
     ));
@@ -156,11 +173,29 @@ const Workflow = () => {
       setOutcome("failed");
       setIsSimulating(false);
     }, 2000);
-  }, []);
+  }, [isNegotiating]);
 
   const simulateHold = useCallback(() => {
     setIsSimulating(true);
     setOutcome("running");
+    if (isNegotiating) {
+      setLcSteps((prev) => prev.map((s, i) =>
+        i === 1 ? { ...s, status: "running" as const } : s
+      ));
+      setTimeout(() => {
+        setLcSteps((prev) => prev.map((s, i) =>
+          i === 1 ? { ...s, status: "hold" as const, duration: "—" }
+          : i > 1 ? { ...s, status: "pending" as const }
+          : s
+        ));
+        setStages((prev) => prev.map((s) =>
+          s.id === 2 ? { ...s, status: "hold" as const, confidence: 52 } : s
+        ));
+        setOutcome("hold");
+        setIsSimulating(false);
+      }, 2000);
+      return;
+    }
     setSanctionSteps((prev) => prev.map((s, i) =>
       i === 2 ? { ...s, status: "running" as const } : s
     ));
@@ -176,7 +211,7 @@ const Workflow = () => {
       setOutcome("hold");
       setIsSimulating(false);
     }, 2000);
-  }, []);
+  }, [isNegotiating]);
 
   const handleRetry = () => {
     setSanctionSteps(sanctionsSteps);

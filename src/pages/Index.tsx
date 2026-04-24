@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRole } from "@/contexts/RoleContext";
-import { Shield, Landmark, ArrowRight, Info, FileCheck, Triangle, Phone, Globe2 } from "lucide-react";
+import { Shield, Landmark, ArrowRight, Info, FileCheck, Triangle, Globe2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useState } from "react";
@@ -54,24 +54,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Top utility bar — Rosano style */}
-      <div className="bg-muted/60 border-b border-border">
-        <div className="container mx-auto px-6 py-2 flex items-center justify-between text-[11px]">
-          <div className="hidden md:flex items-center gap-6 text-muted-foreground uppercase tracking-widest font-medium">
-            <a href="#" className="hover:text-secondary transition-colors">Contact</a>
-            <a href="#" className="hover:text-secondary transition-colors">Locations</a>
-            <a href="#" className="hover:text-secondary transition-colors">FAQ</a>
-            <a href="#" className="hover:text-secondary transition-colors">Compliance</a>
-          </div>
-          <div className="flex items-center gap-2 text-muted-foreground ml-auto">
-            <Phone className="w-3 h-3" />
-            <span>24/7 Trade Support</span>
-            <span className="font-bold text-foreground">+1 (234) 500 0975</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Header — Rosano style: navy block + orange divider + nav */}
+      {/* Header — Rosano style: navy block + orange divider */}
       <header className="border-b border-border bg-card relative">
         <div className="flex items-stretch">
           {/* Brand block (navy) */}
@@ -87,15 +70,6 @@ const Index = () => {
             {/* Orange divider edge */}
             <div className="absolute top-0 bottom-0 -right-1 w-1 bg-secondary" />
           </div>
-
-          {/* Nav */}
-          <nav className="flex-1 flex items-center justify-end gap-8 px-8">
-            <a className="text-sm font-semibold text-secondary">[ Home ]</a>
-            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">About</a>
-            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">Services</a>
-            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">Compliance</a>
-            <a className="text-sm font-medium text-foreground/80 hover:text-foreground cursor-pointer">Contact</a>
-          </nav>
         </div>
       </header>
 

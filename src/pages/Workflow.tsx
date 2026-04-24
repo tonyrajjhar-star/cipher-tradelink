@@ -42,16 +42,24 @@ const holdReasons = [
 ];
 
 const Workflow = () => {
-  const { roleName } = useRole();
-  const [currentPhase, setCurrentPhase] = useState<"sanctions" | "lc">("sanctions");
+  const { role, roleName } = useRole();
+  const isNegotiating = role === "negotiating";
+  const [currentPhase, setCurrentPhase] = useState<"sanctions" | "lc">(isNegotiating ? "lc" : "sanctions");
   const [outcome, setOutcome] = useState<WorkflowOutcome>("running");
   const [sanctionSteps, setSanctionSteps] = useState<ValidationStep[]>(sanctionsSteps);
   const [lcSteps, setLcSteps] = useState<ValidationStep[]>(lcIssuanceSteps);
-  const [stages, setStages] = useState<Stage[]>([
-    { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-    { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: "Apr 10, 15:01" },
-    { id: 3, title: "LC Issuance", status: "pending" },
-  ]);
+  const [stages, setStages] = useState<Stage[]>(
+    isNegotiating
+      ? [
+          { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+          { id: 2, title: "LC Issuance", status: "active", confidence: 0, lastAction: "Apr 10, 15:01" },
+        ]
+      : [
+          { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+          { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: "Apr 10, 15:01" },
+          { id: 3, title: "LC Issuance", status: "pending" },
+        ]
+  );
   const [isSimulating, setIsSimulating] = useState(false);
 
   const now = () => {
@@ -97,14 +105,16 @@ const Workflow = () => {
 
   const simulateLC = useCallback(() => {
     setIsSimulating(true);
+    setOutcome("running");
     let step = 0;
     const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s"];
+    const lcStageId = isNegotiating ? 2 : 3;
 
     const advance = () => {
       if (step >= lcIssuanceSteps.length) {
         // LC complete → success
         setStages((prev) => prev.map((s) =>
-          s.id === 3 ? { ...s, status: "completed" as const, confidence: 100, lastAction: now() } : s
+          s.id === lcStageId ? { ...s, status: "completed" as const, confidence: 100, lastAction: now() } : s
         ));
         setOutcome("success");
         setIsSimulating(false);
@@ -114,7 +124,7 @@ const Workflow = () => {
         i === step ? { ...s, status: "running" as const } : s
       ));
       setStages((prev) => prev.map((s) =>
-        s.id === 3 ? { ...s, confidence: Math.round((step / lcIssuanceSteps.length) * 100) } : s
+        s.id === lcStageId ? { ...s, confidence: Math.round((step / lcIssuanceSteps.length) * 100) } : s
       ));
       setTimeout(() => {
         setLcSteps((prev) => prev.map((s, i) =>
@@ -125,12 +135,29 @@ const Workflow = () => {
       }, 1500);
     };
     advance();
-  }, []);
+  }, [isNegotiating]);
 
   const simulateFailure = useCallback(() => {
     setIsSimulating(true);
     setOutcome("running");
-    let step = 2;
+    if (isNegotiating) {
+      setLcSteps((prev) => prev.map((s, i) =>
+        i === 1 ? { ...s, status: "running" as const } : s
+      ));
+      setTimeout(() => {
+        setLcSteps((prev) => prev.map((s, i) =>
+          i === 1 ? { ...s, status: "failed" as const, duration: "4.6s" }
+          : i > 1 ? { ...s, status: "pending" as const }
+          : s
+        ));
+        setStages((prev) => prev.map((s) =>
+          s.id === 2 ? { ...s, status: "failed" as const, confidence: 35 } : s
+        ));
+        setOutcome("failed");
+        setIsSimulating(false);
+      }, 2000);
+      return;
+    }
     setSanctionSteps((prev) => prev.map((s, i) =>
       i === 2 ? { ...s, status: "running" as const } : s
     ));
@@ -146,11 +173,29 @@ const Workflow = () => {
       setOutcome("failed");
       setIsSimulating(false);
     }, 2000);
-  }, []);
+  }, [isNegotiating]);
 
   const simulateHold = useCallback(() => {
     setIsSimulating(true);
     setOutcome("running");
+    if (isNegotiating) {
+      setLcSteps((prev) => prev.map((s, i) =>
+        i === 1 ? { ...s, status: "running" as const } : s
+      ));
+      setTimeout(() => {
+        setLcSteps((prev) => prev.map((s, i) =>
+          i === 1 ? { ...s, status: "hold" as const, duration: "—" }
+          : i > 1 ? { ...s, status: "pending" as const }
+          : s
+        ));
+        setStages((prev) => prev.map((s) =>
+          s.id === 2 ? { ...s, status: "hold" as const, confidence: 52 } : s
+        ));
+        setOutcome("hold");
+        setIsSimulating(false);
+      }, 2000);
+      return;
+    }
     setSanctionSteps((prev) => prev.map((s, i) =>
       i === 2 ? { ...s, status: "running" as const } : s
     ));
@@ -166,18 +211,25 @@ const Workflow = () => {
       setOutcome("hold");
       setIsSimulating(false);
     }, 2000);
-  }, []);
+  }, [isNegotiating]);
 
   const handleRetry = () => {
-    // Reset to sanctions running state
     setSanctionSteps(sanctionsSteps);
     setLcSteps(lcIssuanceSteps);
-    setStages([
-      { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-      { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: now() },
-      { id: 3, title: "LC Issuance", status: "pending" },
-    ]);
-    setCurrentPhase("sanctions");
+    if (isNegotiating) {
+      setStages([
+        { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+        { id: 2, title: "LC Issuance", status: "active", confidence: 0, lastAction: now() },
+      ]);
+      setCurrentPhase("lc");
+    } else {
+      setStages([
+        { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
+        { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: now() },
+        { id: 3, title: "LC Issuance", status: "pending" },
+      ]);
+      setCurrentPhase("sanctions");
+    }
     setOutcome("running");
   };
 
@@ -192,13 +244,11 @@ const Workflow = () => {
         whatsHappening: "The system is performing real-time sanctions screening against global watchlists. Counterparty verification is currently underway.",
         whatToDo: "Wait for automated screening to complete. If a partial match is detected, you will be prompted to review and escalate or clear.",
         ifNothing: "The transaction will remain in screening state. SLA timer continues. After 24h, it will auto-escalate to compliance supervisor.",
-        documents: ["Application Form.pdf", "Sales Contract.pdf", "Pro-forma Invoice.pdf"],
       }
     : {
         whatsHappening: "LC issuance workflow is validating UCP 600 compliance, checking article-level rules, and verifying trade terms against the contract.",
         whatToDo: "Monitor the validation progress. Once complete, review the issued LC documents and distribute to relevant parties.",
         ifNothing: "LC generation will complete automatically. Documents will be locked for audit. Beneficiary notification will be queued.",
-        documents: ["Application Form.pdf", "Sales Contract.pdf", "Pro-forma Invoice.pdf", "Compliance Clearance Report.pdf"],
       };
 
   return (
@@ -252,13 +302,17 @@ const Workflow = () => {
         <ProcessRail stages={stages} />
 
         {/* Simulation Controls */}
-        {!isSimulating && outcome === "running" && currentPhase === "sanctions" && (
+        {!isSimulating && outcome === "running" && (
           <div className="flex flex-wrap items-center gap-3 p-4 rounded-lg border border-border bg-card shadow-sm">
             <div className="flex items-center gap-2 mr-2">
               <div className="w-1 h-5 bg-secondary rounded-full" />
               <span className="text-xs text-foreground font-semibold uppercase tracking-wider">Simulate Outcome</span>
             </div>
-            <Button size="sm" onClick={simulateSanctions} className="text-xs gap-1.5 bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+            <Button
+              size="sm"
+              onClick={isNegotiating ? simulateLC : simulateSanctions}
+              className="text-xs gap-1.5 bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+            >
               <Play className="w-3.5 h-3.5" /> Run to Success
             </Button>
             <Button size="sm" variant="destructive" onClick={simulateFailure} className="text-xs gap-1.5">
@@ -271,7 +325,7 @@ const Workflow = () => {
         )}
 
         {/* Success: LC Documents */}
-        {outcome === "success" && <LCIssuanceResult />}
+        {outcome === "success" && <LCIssuanceResult format={isNegotiating ? "excel" : "pdf"} />}
 
         {/* Failed: Upload Panel */}
         {outcome === "failed" && (

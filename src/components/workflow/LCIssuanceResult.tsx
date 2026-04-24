@@ -1,15 +1,30 @@
-import { CheckCircle2, Download, Eye, FileBadge } from "lucide-react";
+import { CheckCircle2, Download, Eye, FileBadge, FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const issuedDocument = {
-  name: "Letter_of_Credit_TXN-2026-0841.pdf",
-  type: "LC Instrument · UCP 600 Compliant",
-  size: "248 KB",
-  date: "Apr 10, 2026",
+interface LCIssuanceResultProps {
+  format?: "pdf" | "excel";
+}
+
+const documents = {
+  pdf: {
+    name: "Letter_of_Credit_TXN-2026-0841.pdf",
+    type: "LC Instrument · UCP 600 Compliant",
+    size: "248 KB",
+    date: "Apr 10, 2026",
+  },
+  excel: {
+    name: "Letter_of_Credit_TXN-2026-0841.xlsx",
+    type: "LC Instrument · UCP 600 Compliant",
+    size: "184 KB",
+    date: "Apr 10, 2026",
+  },
 };
 
-export const LCIssuanceResult = () => (
+export const LCIssuanceResult = ({ format = "pdf" }: LCIssuanceResultProps) => {
+  const issuedDocument = documents[format];
+  const FileIcon = format === "excel" ? FileSpreadsheet : FileBadge;
+  return (
   <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-card shadow-elegant">
     {/* Gradient wash */}
     <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/80 via-card to-card" />
@@ -37,7 +52,7 @@ export const LCIssuanceResult = () => (
         </h4>
         <div className="flex items-center gap-4 p-5 rounded-xl border border-border bg-card hover:shadow-md transition-all">
           <div className="icon-3d w-12 h-12 rounded-xl gradient-brand">
-            <FileBadge className="w-5 h-5 text-white drop-shadow" />
+            <FileIcon className="w-5 h-5 text-white drop-shadow" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-foreground truncate">{issuedDocument.name}</p>
@@ -59,4 +74,6 @@ export const LCIssuanceResult = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
+

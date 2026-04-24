@@ -244,13 +244,11 @@ const Workflow = () => {
         whatsHappening: "The system is performing real-time sanctions screening against global watchlists. Counterparty verification is currently underway.",
         whatToDo: "Wait for automated screening to complete. If a partial match is detected, you will be prompted to review and escalate or clear.",
         ifNothing: "The transaction will remain in screening state. SLA timer continues. After 24h, it will auto-escalate to compliance supervisor.",
-        documents: ["Application Form.pdf", "Sales Contract.pdf", "Pro-forma Invoice.pdf"],
       }
     : {
         whatsHappening: "LC issuance workflow is validating UCP 600 compliance, checking article-level rules, and verifying trade terms against the contract.",
         whatToDo: "Monitor the validation progress. Once complete, review the issued LC documents and distribute to relevant parties.",
         ifNothing: "LC generation will complete automatically. Documents will be locked for audit. Beneficiary notification will be queued.",
-        documents: ["Application Form.pdf", "Sales Contract.pdf", "Pro-forma Invoice.pdf", "Compliance Clearance Report.pdf"],
       };
 
   return (

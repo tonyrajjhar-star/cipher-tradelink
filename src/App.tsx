@@ -9,6 +9,7 @@ import Workflow from "./pages/Workflow";
 import CreateTransaction from "./pages/CreateTransaction";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
+import { ThemeApplier } from "./components/ThemeApplier";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <RoleProvider>
+        <ThemeApplier />
         <Toaster />
         <Sonner />
         <BrowserRouter>

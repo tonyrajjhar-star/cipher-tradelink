@@ -1,98 +1,173 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* =========================================================
+     DEFAULT (neutral landing) — light, brand-agnostic
+     ========================================================= */
   :root {
-    /* Rosano-inspired palette: deep navy + bright orange + warm peach */
     --background: 0 0% 100%;
-    --foreground: 226 60% 14%;
+    --foreground: 222 30% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 226 60% 14%;
+    --card-foreground: 222 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 226 60% 14%;
+    --popover-foreground: 222 30% 12%;
 
-    /* Primary: medium navy blue (medium brightness) */
-    --primary: 225 50% 42%;
+    --primary: 222 30% 14%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: medium-bright orange accent */
-    --secondary: 22 75% 62%;
+    --secondary: 348 83% 52%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 22% 96%;
-    --muted-foreground: 226 12% 48%;
+    --muted: 220 16% 96%;
+    --muted-foreground: 220 12% 45%;
 
-    /* Accent: soft warm peach at medium brightness */
-    --accent: 24 75% 90%;
-    --accent-foreground: 225 50% 42%;
+    --accent: 348 80% 96%;
+    --accent-foreground: 222 30% 14%;
 
-    --destructive: 0 65% 58%;
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 152 45% 50%;
+    --success: 152 55% 45%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 80% 60%;
+    --warning: 38 90% 58%;
     --warning-foreground: 0 0% 100%;
 
-    --hold: 38 80% 60%;
-    --hold-foreground: 38 80% 15%;
-
-    --brand-core: 225 50% 42%;
-    --brand-indigo: 225 45% 48%;
-    --brand-dark: 225 55% 32%;
-    --brand-orange: 22 75% 62%;
-    --brand-orange-soft: 24 75% 90%;
-
-    --border: 220 20% 90%;
-    --input: 220 20% 90%;
-    --ring: 225 50% 42%;
+    --border: 220 16% 90%;
+    --input: 220 16% 90%;
+    --ring: 348 83% 52%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 225 50% 42%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 22 75% 62%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 30% 14%;
+    --sidebar-primary: 348 83% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 225 45% 48%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 225 40% 50%;
-    --sidebar-ring: 22 75% 62%;
+    --sidebar-accent: 220 16% 96%;
+    --sidebar-accent-foreground: 222 30% 14%;
+    --sidebar-border: 220 16% 90%;
+    --sidebar-ring: 348 83% 52%;
+
+    --brand-name: "Bullion";
+    --grid-pattern-color: 220 16% 92%;
   }
 
-  .dark {
-    --background: 240 43% 11%;
-    --foreground: 220 20% 96%;
-    --card: 240 43% 14%;
-    --card-foreground: 220 20% 96%;
-    --popover: 240 43% 14%;
-    --popover-foreground: 220 20% 96%;
-    --primary: 216 92% 65%;
+  /* =========================================================
+     ISSUING BANK — light Bullion theme
+     White background, deep navy text, crimson/red accents.
+     Reference: a.png, b.png, c.png, d.png
+     ========================================================= */
+  [data-theme="issuing"] {
+    --background: 0 0% 100%;
+    --foreground: 222 35% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 35% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 35% 11%;
+
+    /* Primary = deep navy (used for headings, dark CTAs in footer) */
+    --primary: 222 35% 11%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 237 51% 42%;
+
+    /* Secondary = signature crimson red (Bullion red) */
+    --secondary: 348 83% 52%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 240 20% 20%;
-    --muted-foreground: 220 15% 65%;
-    --accent: 216 94% 81%;
-    --accent-foreground: 240 43% 11%;
-    --destructive: 0 72% 51%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 46%;
+
+    --accent: 348 90% 97%;
+    --accent-foreground: 348 83% 42%;
+
+    --destructive: 0 72% 52%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 20% 22%;
-    --input: 240 20% 22%;
-    --ring: 216 92% 65%;
-    --sidebar-background: 240 43% 11%;
-    --sidebar-foreground: 220 20% 96%;
-    --sidebar-primary: 216 92% 65%;
+
+    --success: 152 55% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 90% 58%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 220 16% 91%;
+    --input: 220 16% 91%;
+    --ring: 348 83% 52%;
+
+    /* LIGHT sidebar like Bullion's top nav: white surface, navy text, red active */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 35% 14%;
+    --sidebar-primary: 348 83% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 20% 18%;
-    --sidebar-accent-foreground: 220 20% 96%;
-    --sidebar-border: 240 20% 22%;
-    --sidebar-ring: 216 92% 65%;
+    --sidebar-accent: 348 90% 97%;
+    --sidebar-accent-foreground: 348 83% 42%;
+    --sidebar-border: 220 16% 91%;
+    --sidebar-ring: 348 83% 52%;
+
+    --brand-name: "Bullion · Issuing";
+    --grid-pattern-color: 220 16% 93%;
+  }
+
+  /* =========================================================
+     NEGOTIATING BANK — dark Bullion theme
+     Near-black surface, vivid green accents, white text.
+     Reference: aa.png, bb.png, cc.png, dd.png, ee.png
+     ========================================================= */
+  [data-theme="negotiating"] {
+    --background: 220 18% 97%;
+    --foreground: 220 25% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 12%;
+
+    /* Primary = near-black like Bullion's dark nav/footer */
+    --primary: 220 28% 10%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary = signature Bullion green */
+    --secondary: 145 63% 42%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 18% 94%;
+    --muted-foreground: 220 10% 42%;
+
+    --accent: 145 60% 94%;
+    --accent-foreground: 145 63% 28%;
+
+    --destructive: 0 72% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 145 63% 42%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 90% 58%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 220 16% 88%;
+    --input: 220 16% 88%;
+    --ring: 145 63% 42%;
+
+    /* DARK sidebar like Bullion's dark nav */
+    --sidebar-background: 220 28% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 145 63% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 25% 16%;
+    --sidebar-accent-foreground: 145 63% 55%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 145 63% 42%;
+
+    --brand-name: "Bullion · Negotiating";
+    --grid-pattern-color: 220 16% 90%;
   }
 }
 
@@ -107,8 +182,9 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     @apply tracking-tight;
+    font-weight: 800;
   }
 }
 
@@ -117,79 +193,83 @@
     @apply bg-card/80 backdrop-blur-xl border border-border/50 shadow-sm;
   }
 
-  .status-success {
-    @apply bg-emerald-50 text-emerald-700 border-emerald-200;
-  }
+  /* ---------- shared status utilities (kept) ---------- */
+  .status-success { @apply bg-emerald-50 text-emerald-700 border-emerald-200; }
+  .status-warning { @apply bg-amber-50 text-amber-700 border-amber-200; }
+  .status-failed  { @apply bg-red-50 text-red-700 border-red-200; }
+  .status-info    { @apply bg-sky-50 text-sky-700 border-sky-200; }
 
-  .status-warning {
-    @apply bg-amber-50 text-amber-700 border-amber-200;
-  }
-
-  .status-failed {
-    @apply bg-red-50 text-red-700 border-red-200;
-  }
-
-  .status-info {
-    @apply bg-sky-50 text-sky-700 border-sky-200;
-  }
-
+  /* ---------- brand-aware gradients (driven by tokens) ---------- */
   .gradient-brand {
-    background-image: linear-gradient(135deg, hsl(225 50% 48%) 0%, hsl(225 55% 32%) 100%);
+    background-image: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.78) 100%);
   }
 
   .gradient-brand-soft {
-    background-image: linear-gradient(135deg, hsl(225 45% 96%) 0%, hsl(225 40% 94%) 100%);
+    background-image: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--card)) 100%);
   }
 
-  .gradient-orange {
-    background-image: linear-gradient(135deg, hsl(22 78% 65%) 0%, hsl(18 72% 55%) 100%);
-  }
-
-  .gradient-peach {
-    background-image: radial-gradient(circle at 35% 35%, hsl(24 75% 90%) 0%, hsl(24 75% 94%) 60%, transparent 100%);
-  }
-
-  .gradient-mesh {
-    background-color: hsl(0 0% 100%);
-    background-image:
-      radial-gradient(at 8% 5%, hsl(24 75% 88% / 0.55) 0px, transparent 42%),
-      radial-gradient(at 92% 8%, hsl(225 50% 42% / 0.06) 0px, transparent 45%),
-      radial-gradient(at 70% 95%, hsl(22 75% 62% / 0.07) 0px, transparent 50%);
+  .gradient-primary-dark {
+    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.85) 100%);
   }
 
   .gradient-success {
-    background-image: linear-gradient(135deg, hsl(152 50% 56%) 0%, hsl(160 50% 44%) 100%);
+    background-image: linear-gradient(135deg, hsl(152 55% 50%) 0%, hsl(160 55% 38%) 100%);
   }
 
   .gradient-warning {
-    background-image: linear-gradient(135deg, hsl(38 80% 65%) 0%, hsl(28 78% 55%) 100%);
+    background-image: linear-gradient(135deg, hsl(38 90% 60%) 0%, hsl(28 88% 50%) 100%);
   }
 
   .gradient-danger {
-    background-image: linear-gradient(135deg, hsl(0 70% 68%) 0%, hsl(355 65% 55%) 100%);
+    background-image: linear-gradient(135deg, hsl(0 75% 62%) 0%, hsl(355 70% 50%) 100%);
   }
 
+  /* Subtle Bullion-style ambient backdrop with accent wash */
+  .gradient-mesh {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(at 8% 5%, hsl(var(--secondary) / 0.06) 0px, transparent 45%),
+      radial-gradient(at 92% 8%, hsl(var(--primary) / 0.05) 0px, transparent 50%),
+      radial-gradient(at 70% 95%, hsl(var(--secondary) / 0.05) 0px, transparent 55%);
+  }
+
+  /* Faint candlestick / grid pattern reminiscent of Bullion hero */
+  .pattern-grid {
+    background-image:
+      linear-gradient(hsl(var(--grid-pattern-color)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--grid-pattern-color)) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ---------- shadows tied to current accent ---------- */
   .shadow-elegant {
-    box-shadow: 0 10px 30px -12px hsl(225 50% 42% / 0.18), 0 2px 6px -2px hsl(225 50% 42% / 0.08);
+    box-shadow:
+      0 10px 30px -12px hsl(var(--primary) / 0.18),
+      0 2px 6px -2px hsl(var(--primary) / 0.08);
   }
 
   .shadow-glow {
-    box-shadow: 0 0 0 1px hsl(22 75% 62% / 0.12), 0 8px 30px -8px hsl(22 75% 62% / 0.35);
+    box-shadow:
+      0 0 0 1px hsl(var(--secondary) / 0.14),
+      0 8px 30px -8px hsl(var(--secondary) / 0.40);
   }
 
-  .shadow-orange {
-    box-shadow: 0 10px 30px -12px hsl(22 75% 62% / 0.40), 0 2px 6px -2px hsl(22 75% 62% / 0.16);
+  .shadow-orange { /* legacy alias kept for compatibility */
+    box-shadow:
+      0 10px 30px -12px hsl(var(--secondary) / 0.42),
+      0 2px 6px -2px hsl(var(--secondary) / 0.18);
   }
 
-  /* Rosano-style accent bar (left orange divider) */
-  .accent-bar-orange::before {
+  /* Accent left bar (now driven by --secondary, was always orange) */
+  .accent-bar-orange::before,
+  .accent-bar-brand::before {
     content: "";
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     width: 4px;
-    background: hsl(22 75% 62%);
+    background: hsl(var(--secondary));
   }
 
   .icon-3d {
@@ -205,5 +285,24 @@
     opacity: 0.55;
     transform: translateY(6px) scale(0.92);
     z-index: -1;
+  }
+
+  /* Bullion-style chamfered diamond plinth used under stat cards (cc.png/bb.png) */
+  .plinth {
+    position: relative;
+  }
+  .plinth::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%) rotate(45deg);
+    width: 70%;
+    height: 28px;
+    background: linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--background)) 100%);
+    border-radius: 4px;
+    z-index: -1;
+    opacity: 0.7;
+    filter: blur(0.5px);
   }
 }

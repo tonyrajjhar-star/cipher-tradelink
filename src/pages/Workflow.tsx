@@ -188,7 +188,7 @@ const Workflow = () => {
           : s
         ));
         setStages((prev) => prev.map((s) =>
-          s.id === 2 ? { ...s, status: "hold" as const, confidence: 52 } : s
+          s.id === 1 ? { ...s, status: "hold" as const, confidence: 52 } : s
         ));
         setOutcome("hold");
         setIsSimulating(false);

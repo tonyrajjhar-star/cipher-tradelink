@@ -360,12 +360,12 @@ const Index = () => {
 
 const NeutralCandlesticks = () => (
   <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-    <line x1="8" y1="6" x2="8" y2="34" stroke="#E11D48" strokeWidth="1.5" strokeLinecap="round" />
-    <rect x="5" y="14" width="6" height="14" rx="1.2" fill="#F43F5E" />
+    <line x1="8" y1="6" x2="8" y2="34" stroke="#3386C3" strokeWidth="1.5" strokeLinecap="round" />
+    <rect x="5" y="14" width="6" height="14" rx="1.2" fill="#5BA3D6" />
     <line x1="20" y1="2" x2="20" y2="38" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
     <rect x="17" y="8" width="6" height="24" rx="1.2" fill="#22C55E" />
-    <line x1="32" y1="6" x2="32" y2="34" stroke="#9F1239" strokeWidth="1.5" strokeLinecap="round" />
-    <rect x="29" y="12" width="6" height="18" rx="1.2" fill="#9F1239" />
+    <line x1="32" y1="6" x2="32" y2="34" stroke="#1F5E8A" strokeWidth="1.5" strokeLinecap="round" />
+    <rect x="29" y="12" width="6" height="18" rx="1.2" fill="#1F5E8A" />
   </svg>
 );
 

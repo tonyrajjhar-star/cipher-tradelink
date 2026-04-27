@@ -132,14 +132,14 @@ const Index = () => {
           {/* Eyebrow + headline */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4">
-              <span className="w-8 h-0.5 bg-[#E11D48]" />
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#9F1239]">
+              <span className="w-8 h-0.5 bg-[#3386C3]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#1F5E8A]">
                 Choose your operating role
               </span>
               <span className="w-8 h-0.5 bg-emerald-500" />
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4 tracking-tight leading-[1.1]">
-              Leading the way in <span className="text-[#E11D48]">Cross-Border</span>
+              Leading the way in <span className="text-[#3386C3]">Cross-Border</span>
               <br />
               Trade <span className="text-emerald-600">Finance</span>
             </h2>

@@ -35,20 +35,20 @@ const roles = [
     ],
     regulatory:
       "Full regulatory accountability under UCP 600, local AML/CFT regulations, and OFAC/EU sanctions frameworks.",
-    // theme preview (matches data-theme="issuing": light + crimson)
+    // theme preview (matches data-theme="issuing": light + brand blue #3386c3)
     preview: {
       surface: "bg-white",
       surfaceText: "text-[#0B1020]",
       mutedText: "text-[#6b7280]",
-      accent: "#E11D48",
-      accentSoft: "#FFE4E9",
-      candleA: "#E11D48",
-      candleB: "#F43F5E",
-      candleC: "#9F1239",
-      label: "Light theme · Crimson accent",
+      accent: "#3386C3",
+      accentSoft: "#E1F0FA",
+      candleA: "#3386C3",
+      candleB: "#5BA3D6",
+      candleC: "#1F5E8A",
+      label: "Light theme · Azure accent",
     },
-    btnClass: "bg-[#E11D48] hover:bg-[#be123c] text-white",
-    chipClass: "bg-[#FFE4E9] text-[#9F1239]",
+    btnClass: "bg-[#3386C3] hover:bg-[#1F5E8A] text-white",
+    chipClass: "bg-[#E1F0FA] text-[#1F5E8A]",
   },
   {
     id: "negotiating" as const,
@@ -125,21 +125,21 @@ const Index = () => {
       {/* Hero */}
       <main className="flex-1 relative overflow-hidden">
         <div className="absolute inset-0 pattern-grid opacity-40" />
-        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] rounded-full bg-[#FFE4E9]/40 blur-3xl -translate-y-1/3 translate-x-1/4" />
+        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] rounded-full bg-[#E1F0FA]/60 blur-3xl -translate-y-1/3 translate-x-1/4" />
         <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] rounded-full bg-emerald-100/40 blur-3xl translate-y-1/3 -translate-x-1/4" />
 
         <div className="container mx-auto px-6 py-14 relative">
           {/* Eyebrow + headline */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4">
-              <span className="w-8 h-0.5 bg-[#E11D48]" />
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#9F1239]">
+              <span className="w-8 h-0.5 bg-[#3386C3]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#1F5E8A]">
                 Choose your operating role
               </span>
               <span className="w-8 h-0.5 bg-emerald-500" />
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4 tracking-tight leading-[1.1]">
-              Leading the way in <span className="text-[#E11D48]">Cross-Border</span>
+              Leading the way in <span className="text-[#3386C3]">Cross-Border</span>
               <br />
               Trade <span className="text-emerald-600">Finance</span>
             </h2>
@@ -322,9 +322,9 @@ const Index = () => {
           {/* Trust strip */}
           <div className="max-w-6xl mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { v: "UCP 600", l: "Compliant", color: "#E11D48" },
+              { v: "UCP 600", l: "Compliant", color: "#3386C3" },
               { v: "OFAC / EU", l: "Sanctions Screened", color: "#22C55E" },
-              { v: "ISO 27001", l: "Certified Platform", color: "#E11D48" },
+              { v: "ISO 27001", l: "Certified Platform", color: "#3386C3" },
               { v: "Always-On", l: "Operations", color: "#22C55E" },
             ].map((t) => (
               <div
@@ -360,12 +360,12 @@ const Index = () => {
 
 const NeutralCandlesticks = () => (
   <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-    <line x1="8" y1="6" x2="8" y2="34" stroke="#E11D48" strokeWidth="1.5" strokeLinecap="round" />
-    <rect x="5" y="14" width="6" height="14" rx="1.2" fill="#F43F5E" />
+    <line x1="8" y1="6" x2="8" y2="34" stroke="#3386C3" strokeWidth="1.5" strokeLinecap="round" />
+    <rect x="5" y="14" width="6" height="14" rx="1.2" fill="#5BA3D6" />
     <line x1="20" y1="2" x2="20" y2="38" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
     <rect x="17" y="8" width="6" height="24" rx="1.2" fill="#22C55E" />
-    <line x1="32" y1="6" x2="32" y2="34" stroke="#9F1239" strokeWidth="1.5" strokeLinecap="round" />
-    <rect x="29" y="12" width="6" height="18" rx="1.2" fill="#9F1239" />
+    <line x1="32" y1="6" x2="32" y2="34" stroke="#1F5E8A" strokeWidth="1.5" strokeLinecap="round" />
+    <rect x="29" y="12" width="6" height="18" rx="1.2" fill="#1F5E8A" />
   </svg>
 );
 

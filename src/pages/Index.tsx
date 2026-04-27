@@ -322,9 +322,9 @@ const Index = () => {
           {/* Trust strip */}
           <div className="max-w-6xl mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { v: "UCP 600", l: "Compliant", color: "#E11D48" },
+              { v: "UCP 600", l: "Compliant", color: "#3386C3" },
               { v: "OFAC / EU", l: "Sanctions Screened", color: "#22C55E" },
-              { v: "ISO 27001", l: "Certified Platform", color: "#E11D48" },
+              { v: "ISO 27001", l: "Certified Platform", color: "#3386C3" },
               { v: "Always-On", l: "Operations", color: "#22C55E" },
             ].map((t) => (
               <div

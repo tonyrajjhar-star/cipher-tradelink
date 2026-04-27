@@ -59,33 +59,32 @@
   }
 
   /* =========================================================
-     ISSUING BANK — light Bullion theme
-     White background, deep navy text, crimson/red accents.
-     Reference: a.png, b.png, c.png, d.png
+     ISSUING BANK — mirrors Negotiating layout but with brand
+     blue (#3386c3 → 205 59% 48%) instead of green.
      ========================================================= */
   [data-theme="issuing"] {
-    --background: 0 0% 100%;
-    --foreground: 222 35% 11%;
+    --background: 210 20% 97%;
+    --foreground: 215 30% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 35% 11%;
+    --card-foreground: 215 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 35% 11%;
+    --popover-foreground: 215 30% 12%;
 
-    /* Primary = deep navy (used for headings, dark CTAs in footer) */
-    --primary: 222 35% 11%;
+    /* Primary = near-black like Negotiating, for dark surfaces */
+    --primary: 215 30% 11%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary = signature crimson red (Bullion red) */
-    --secondary: 348 83% 52%;
+    /* Secondary = signature brand blue #3386c3 */
+    --secondary: 205 59% 48%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 10% 46%;
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 12% 42%;
 
-    --accent: 348 90% 97%;
-    --accent-foreground: 348 83% 42%;
+    --accent: 205 70% 94%;
+    --accent-foreground: 205 70% 28%;
 
     --destructive: 0 72% 52%;
     --destructive-foreground: 0 0% 100%;
@@ -96,22 +95,22 @@
     --warning: 38 90% 58%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 220 16% 91%;
-    --input: 220 16% 91%;
-    --ring: 348 83% 52%;
+    --border: 210 18% 88%;
+    --input: 210 18% 88%;
+    --ring: 205 59% 48%;
 
-    /* LIGHT sidebar like Bullion's top nav: white surface, navy text, red active */
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 35% 14%;
-    --sidebar-primary: 348 83% 52%;
+    /* DARK sidebar — same structure as Negotiating, with blue accent */
+    --sidebar-background: 215 32% 11%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 205 59% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 348 90% 97%;
-    --sidebar-accent-foreground: 348 83% 42%;
-    --sidebar-border: 220 16% 91%;
-    --sidebar-ring: 348 83% 52%;
+    --sidebar-accent: 215 28% 17%;
+    --sidebar-accent-foreground: 205 75% 65%;
+    --sidebar-border: 215 28% 19%;
+    --sidebar-ring: 205 59% 48%;
 
     --brand-name: "Bullion · Issuing";
-    --grid-pattern-color: 220 16% 93%;
+    --grid-pattern-color: 210 18% 90%;
   }
 
   /* =========================================================

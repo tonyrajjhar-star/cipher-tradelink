@@ -51,8 +51,7 @@ const Workflow = () => {
   const [stages, setStages] = useState<Stage[]>(
     isNegotiating
       ? [
-          { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-          { id: 2, title: "LC Issuance", status: "active", confidence: 0, lastAction: "Apr 10, 15:01" },
+          { id: 1, title: "Application & Contract Validation + LC Issuance", status: "active", confidence: 50, lastAction: "Apr 10, 15:01" },
         ]
       : [
           { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },

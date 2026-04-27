@@ -217,8 +217,7 @@ const Workflow = () => {
     setLcSteps(lcIssuanceSteps);
     if (isNegotiating) {
       setStages([
-        { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-        { id: 2, title: "LC Issuance", status: "active", confidence: 0, lastAction: now() },
+        { id: 1, title: "Application & Contract Validation + LC Issuance", status: "active", confidence: 50, lastAction: now() },
       ]);
       setCurrentPhase("lc");
     } else {

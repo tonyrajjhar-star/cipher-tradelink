@@ -51,8 +51,7 @@ const Workflow = () => {
   const [stages, setStages] = useState<Stage[]>(
     isNegotiating
       ? [
-          { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-          { id: 2, title: "LC Issuance", status: "active", confidence: 0, lastAction: "Apr 10, 15:01" },
+          { id: 1, title: "Application & Contract Validation + LC Issuance", status: "active", confidence: 50, lastAction: "Apr 10, 15:01" },
         ]
       : [
           { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
@@ -108,7 +107,7 @@ const Workflow = () => {
     setOutcome("running");
     let step = 0;
     const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s"];
-    const lcStageId = isNegotiating ? 2 : 3;
+    const lcStageId = isNegotiating ? 1 : 3;
 
     const advance = () => {
       if (step >= lcIssuanceSteps.length) {
@@ -151,7 +150,7 @@ const Workflow = () => {
           : s
         ));
         setStages((prev) => prev.map((s) =>
-          s.id === 2 ? { ...s, status: "failed" as const, confidence: 35 } : s
+          s.id === 1 ? { ...s, status: "failed" as const, confidence: 35 } : s
         ));
         setOutcome("failed");
         setIsSimulating(false);
@@ -189,7 +188,7 @@ const Workflow = () => {
           : s
         ));
         setStages((prev) => prev.map((s) =>
-          s.id === 2 ? { ...s, status: "hold" as const, confidence: 52 } : s
+          s.id === 1 ? { ...s, status: "hold" as const, confidence: 52 } : s
         ));
         setOutcome("hold");
         setIsSimulating(false);
@@ -218,8 +217,7 @@ const Workflow = () => {
     setLcSteps(lcIssuanceSteps);
     if (isNegotiating) {
       setStages([
-        { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
-        { id: 2, title: "LC Issuance", status: "active", confidence: 0, lastAction: now() },
+        { id: 1, title: "Application & Contract Validation + LC Issuance", status: "active", confidence: 50, lastAction: now() },
       ]);
       setCurrentPhase("lc");
     } else {

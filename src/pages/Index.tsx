@@ -125,7 +125,7 @@ const Index = () => {
       {/* Hero */}
       <main className="flex-1 relative overflow-hidden">
         <div className="absolute inset-0 pattern-grid opacity-40" />
-        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] rounded-full bg-[#FFE4E9]/40 blur-3xl -translate-y-1/3 translate-x-1/4" />
+        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] rounded-full bg-[#E1F0FA]/60 blur-3xl -translate-y-1/3 translate-x-1/4" />
         <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] rounded-full bg-emerald-100/40 blur-3xl translate-y-1/3 -translate-x-1/4" />
 
         <div className="container mx-auto px-6 py-14 relative">

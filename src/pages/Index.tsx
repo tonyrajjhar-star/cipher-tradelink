@@ -35,20 +35,20 @@ const roles = [
     ],
     regulatory:
       "Full regulatory accountability under UCP 600, local AML/CFT regulations, and OFAC/EU sanctions frameworks.",
-    // theme preview (matches data-theme="issuing": light + crimson)
+    // theme preview (matches data-theme="issuing": light + brand blue #3386c3)
     preview: {
       surface: "bg-white",
       surfaceText: "text-[#0B1020]",
       mutedText: "text-[#6b7280]",
-      accent: "#E11D48",
-      accentSoft: "#FFE4E9",
-      candleA: "#E11D48",
-      candleB: "#F43F5E",
-      candleC: "#9F1239",
-      label: "Light theme · Crimson accent",
+      accent: "#3386C3",
+      accentSoft: "#E1F0FA",
+      candleA: "#3386C3",
+      candleB: "#5BA3D6",
+      candleC: "#1F5E8A",
+      label: "Light theme · Azure accent",
     },
-    btnClass: "bg-[#E11D48] hover:bg-[#be123c] text-white",
-    chipClass: "bg-[#FFE4E9] text-[#9F1239]",
+    btnClass: "bg-[#3386C3] hover:bg-[#1F5E8A] text-white",
+    chipClass: "bg-[#E1F0FA] text-[#1F5E8A]",
   },
   {
     id: "negotiating" as const,

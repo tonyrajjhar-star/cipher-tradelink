@@ -30,9 +30,9 @@ export const BrandLogo = ({
   const isNeg = resolved === "negotiating";
 
   // Candlestick palette per theme
-  const wickColor = isNeg ? "#16A34A" : "#E11D48"; // green vs crimson
-  const bodyColor = isNeg ? "#22C55E" : "#F43F5E";
-  const muted = isNeg ? "#15803D" : "#9F1239";
+  const wickColor = isNeg ? "#16A34A" : "#3386C3"; // green vs brand blue
+  const bodyColor = isNeg ? "#22C55E" : "#3386C3";
+  const muted = isNeg ? "#15803D" : "#1F5E8A";
 
   const wordmark = isNeg ? "TRADEFLOW" : "TRADEFLOW";
   const tagline = isNeg ? "Negotiating Desk" : "Issuing Desk";

@@ -22,11 +22,12 @@ const sanctionsSteps: ValidationStep[] = [
 ];
 
 const lcIssuanceSteps: ValidationStep[] = [
-  { label: "LC Issuance Workflow Initiation", status: "pending", explanation: "Initializes the LC generation engine and loads transaction parameters." },
-  { label: "UCP 600 Rule Validation", status: "pending", explanation: "Validates all terms against UCP 600 articles for international compliance." },
-  { label: "Article-Level Compliance Checking", status: "pending", explanation: "Checks each LC article individually for discrepancies and regulatory alignment." },
-  { label: "Trade & Payment Terms Verification", status: "pending", explanation: "Confirms payment schedules, Incoterms, and bank obligations match the underlying contract." },
-  { label: "Discrepancy Detection", status: "pending", explanation: "Final sweep for inconsistencies across all documents and terms before issuance." },
+  { label: "Parsing LC & Extracting Structured Metadata", status: "pending", explanation: "Parses the LC instrument and extracts structured metadata (parties, amounts, terms, dates) into a canonical schema." },
+  { label: "Building Validation Manifests per Document", status: "pending", explanation: "Builds a per-document validation manifest defining which fields, rules, and signatures must be checked." },
+  { label: "Extracting & Resolving Document Fields", status: "pending", explanation: "Extracts fields from each document and resolves them against the canonical LC metadata." },
+  { label: "Executing Compliance Checks Against Business Rules", status: "pending", explanation: "Runs UCP 600, sanctions, and internal business-rule checks across all resolved fields." },
+  { label: "Generating Validation Report", status: "pending", explanation: "Aggregates all findings into a structured validation report with pass/fail per rule." },
+  { label: "Document Verification Process", status: "pending", explanation: "Final document verification: signatures, stamps, and tamper-evidence checks before issuance." },
 ];
 
 const failReasons = [

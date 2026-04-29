@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { useRole } from "@/contexts/RoleContext";
-import { ChevronRight, AlertTriangle, Play, CheckCircle2 } from "lucide-react";
+import { ChevronRight, AlertTriangle, Play, CheckCircle2, ShieldCheck, ScanSearch, FileSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProcessRail } from "@/components/workflow/ProcessRail";

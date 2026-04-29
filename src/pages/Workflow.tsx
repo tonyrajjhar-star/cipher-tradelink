@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { useRole } from "@/contexts/RoleContext";
-import { ChevronRight, AlertTriangle, Play, CheckCircle2 } from "lucide-react";
+import { ChevronRight, AlertTriangle, Play, CheckCircle2, ShieldCheck, ScanSearch, FileSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProcessRail } from "@/components/workflow/ProcessRail";
 import { ExecutionLog } from "@/components/workflow/ExecutionLog";
+import { LCStepsVisual } from "@/components/workflow/LCStepsVisual";
 import { ContextPanel } from "@/components/workflow/ContextPanel";
 import { LCIssuanceResult } from "@/components/workflow/LCIssuanceResult";
 import { FailureUploadPanel } from "@/components/workflow/FailureUploadPanel";
@@ -22,11 +23,12 @@ const sanctionsSteps: ValidationStep[] = [
 ];
 
 const lcIssuanceSteps: ValidationStep[] = [
-  { label: "LC Issuance Workflow Initiation", status: "pending", explanation: "Initializes the LC generation engine and loads transaction parameters." },
-  { label: "UCP 600 Rule Validation", status: "pending", explanation: "Validates all terms against UCP 600 articles for international compliance." },
-  { label: "Article-Level Compliance Checking", status: "pending", explanation: "Checks each LC article individually for discrepancies and regulatory alignment." },
-  { label: "Trade & Payment Terms Verification", status: "pending", explanation: "Confirms payment schedules, Incoterms, and bank obligations match the underlying contract." },
-  { label: "Discrepancy Detection", status: "pending", explanation: "Final sweep for inconsistencies across all documents and terms before issuance." },
+  { label: "Parsing LC & Extracting Structured Metadata", status: "pending", explanation: "Parses the LC instrument and extracts structured metadata (parties, amounts, terms, dates) into a canonical schema." },
+  { label: "Building Validation Manifests per Document", status: "pending", explanation: "Builds a per-document validation manifest defining which fields, rules, and signatures must be checked." },
+  { label: "Extracting & Resolving Document Fields", status: "pending", explanation: "Extracts fields from each document and resolves them against the canonical LC metadata." },
+  { label: "Executing Compliance Checks Against Business Rules", status: "pending", explanation: "Runs UCP 600, sanctions, and internal business-rule checks across all resolved fields." },
+  { label: "Generating Validation Report", status: "pending", explanation: "Aggregates all findings into a structured validation report with pass/fail per rule." },
+  { label: "Document Verification Process", status: "pending", explanation: "Final document verification: signatures, stamps, and tamper-evidence checks before issuance." },
 ];
 
 const failReasons = [
@@ -106,7 +108,7 @@ const Workflow = () => {
     setIsSimulating(true);
     setOutcome("running");
     let step = 0;
-    const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s"];
+    const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s", "1.4s"];
     const lcStageId = isNegotiating ? 1 : 3;
 
     const advance = () => {
@@ -252,23 +254,34 @@ const Workflow = () => {
   return (
     <AppLayout>
       <div className="space-y-6 animate-slide-up">
-        {/* Header — Rosano style */}
-        <div className="relative overflow-hidden rounded-lg bg-card border border-border shadow-sm">
-          <div className="absolute top-0 left-0 bottom-0 w-1 bg-secondary" />
-          <div className="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-accent/70 blur-3xl" />
-          <div className="relative p-6 flex items-start justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-                <span className="uppercase tracking-widest">Transaction</span>
-                <ChevronRight className="w-3 h-3" />
-                <span className="text-foreground font-semibold">TXN-2026-0841</span>
+        {/* Validation Header — visual hero */}
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/5 to-transparent" />
+          <div className="absolute -right-24 -top-24 w-72 h-72 rounded-full bg-primary/20 blur-3xl" />
+          <div className="absolute -left-16 -bottom-16 w-56 h-56 rounded-full bg-secondary/20 blur-3xl" />
+
+          <div className="relative p-6 flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-4">
+              <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-elegant">
+                <ShieldCheck className="w-8 h-8 text-white drop-shadow" strokeWidth={2} />
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-card animate-pulse" />
               </div>
-              <h2 className="text-2xl font-bold text-foreground">Al Rajhi Trading Co.</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                LC Amount: <span className="font-semibold text-foreground">$2,450,000 USD</span>
-                <span className="mx-2 text-border">·</span>
-                <span className="text-secondary font-medium">{roleName}</span>
-              </p>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary mb-1">
+                  {roleName} · Workspace
+                </p>
+                <h2 className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight flex items-center gap-2">
+                  Validation
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-secondary bg-secondary/10 px-2.5 py-1 rounded-full border border-secondary/20">
+                    <ScanSearch className="w-3.5 h-3.5" />
+                    Live
+                  </span>
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1.5">
+                  <FileSearch className="w-3.5 h-3.5" />
+                  Automated multi-stage compliance & document verification
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-2">
               {outcome === "success" && (
@@ -338,7 +351,11 @@ const Workflow = () => {
         {/* Active Stage Detail (while running) */}
         {outcome === "running" && (activeStage || isSimulating) && (
           <div className="grid lg:grid-cols-3 gap-6">
-            <ExecutionLog title={currentTitle} steps={currentSteps} />
+            {currentPhase === "lc" ? (
+              <LCStepsVisual title={currentTitle} steps={currentSteps} />
+            ) : (
+              <ExecutionLog title={currentTitle} steps={currentSteps} />
+            )}
             <ContextPanel {...contextContent} />
           </div>
         )}

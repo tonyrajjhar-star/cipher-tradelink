@@ -166,70 +166,34 @@ const Index = () => {
                   onMouseLeave={() => setHoveredRole(null)}
                   onClick={() => handleSelectRole(role.id)}
                 >
-                  {/* Theme preview "browser chrome" — shows what the workspace looks like */}
-                  <div className={`relative ${p.surface} px-5 pt-4 pb-6`}>
-                    <div className="flex items-center justify-between mb-4">
+                  {/* Theme preview band — minimalist accent strip */}
+                  <div className={`relative ${p.surface} px-5 py-5`}>
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
                         <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
                         <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
                       </div>
-                      <span
-                        className={`text-[9px] uppercase tracking-widest font-semibold ${p.mutedText}`}
-                      >
-                        {p.label}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-3 mb-4">
-                      {/* Mini logo in role's signature colors */}
-                      <MiniCandlesticks
-                        a={p.candleA}
-                        b={p.candleB}
-                        c={p.candleC}
-                      />
-                      <div>
-                        <div className={`text-xs font-extrabold tracking-wider ${p.surfaceText}`}>
-                          TRADEFLOW
-                        </div>
-                        <div className={`text-[9px] uppercase tracking-widest ${p.mutedText}`}>
-                          {role.id === "negotiating" ? "Negotiating Desk" : "Issuing Desk"}
-                        </div>
-                      </div>
                       <div
-                        className="ml-auto inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-full"
-                        style={{
-                          backgroundColor: p.accentSoft,
-                          color: p.accent,
-                        }}
+                        className="inline-flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-full"
+                        style={{ backgroundColor: p.accentSoft, color: p.accent }}
                       >
                         <TrendingUp className="w-3 h-3" />
-                        Live
+                        Live Workspace
                       </div>
                     </div>
-
-                    {/* Mini "card" sample to convey theme */}
-                    <div
-                      className="rounded-lg p-3 border"
-                      style={{
-                        borderColor: role.id === "negotiating" ? "#1f2933" : "#eef0f4",
-                        backgroundColor: role.id === "negotiating" ? "#161B22" : "#F7F8FA",
-                      }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className={`text-[10px] uppercase tracking-widest ${p.mutedText}`}>
-                          Sample KPI
-                        </span>
-                        <span
-                          className="text-[10px] font-mono font-semibold"
-                          style={{ color: p.accent }}
-                        >
-                          +0.34%
-                        </span>
-                      </div>
-                      <div className={`text-lg font-extrabold mt-0.5 ${p.surfaceText}`}>
-                        $2.45M USD
-                      </div>
+                    <div className="mt-4 flex items-end gap-1.5 h-10">
+                      {[60, 35, 80, 50, 92, 45, 70, 88, 55, 95].map((h, idx) => (
+                        <div
+                          key={idx}
+                          className="flex-1 rounded-sm"
+                          style={{
+                            height: `${h}%`,
+                            backgroundColor: idx % 2 === 0 ? p.candleB : p.candleC,
+                            opacity: 0.85,
+                          }}
+                        />
+                      ))}
                     </div>
                   </div>
 

@@ -253,23 +253,34 @@ const Workflow = () => {
   return (
     <AppLayout>
       <div className="space-y-6 animate-slide-up">
-        {/* Header — Rosano style */}
-        <div className="relative overflow-hidden rounded-lg bg-card border border-border shadow-sm">
-          <div className="absolute top-0 left-0 bottom-0 w-1 bg-secondary" />
-          <div className="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-accent/70 blur-3xl" />
-          <div className="relative p-6 flex items-start justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-                <span className="uppercase tracking-widest">Transaction</span>
-                <ChevronRight className="w-3 h-3" />
-                <span className="text-foreground font-semibold">TXN-2026-0841</span>
+        {/* Validation Header — visual hero */}
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/5 to-transparent" />
+          <div className="absolute -right-24 -top-24 w-72 h-72 rounded-full bg-primary/20 blur-3xl" />
+          <div className="absolute -left-16 -bottom-16 w-56 h-56 rounded-full bg-secondary/20 blur-3xl" />
+
+          <div className="relative p-6 flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-4">
+              <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-elegant">
+                <ShieldCheck className="w-8 h-8 text-white drop-shadow" strokeWidth={2} />
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-card animate-pulse" />
               </div>
-              <h2 className="text-2xl font-bold text-foreground">Al Rajhi Trading Co.</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                LC Amount: <span className="font-semibold text-foreground">$2,450,000 USD</span>
-                <span className="mx-2 text-border">·</span>
-                <span className="text-secondary font-medium">{roleName}</span>
-              </p>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary mb-1">
+                  {roleName} · Workspace
+                </p>
+                <h2 className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight flex items-center gap-2">
+                  Validation
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-secondary bg-secondary/10 px-2.5 py-1 rounded-full border border-secondary/20">
+                    <ScanSearch className="w-3.5 h-3.5" />
+                    Live
+                  </span>
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1.5">
+                  <FileSearch className="w-3.5 h-3.5" />
+                  Automated multi-stage compliance & document verification
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-2">
               {outcome === "success" && (

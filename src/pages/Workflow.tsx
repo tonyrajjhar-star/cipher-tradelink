@@ -351,7 +351,11 @@ const Workflow = () => {
         {/* Active Stage Detail (while running) */}
         {outcome === "running" && (activeStage || isSimulating) && (
           <div className="grid lg:grid-cols-3 gap-6">
-            <ExecutionLog title={currentTitle} steps={currentSteps} />
+            {currentPhase === "lc" ? (
+              <LCStepsVisual title={currentTitle} steps={currentSteps} />
+            ) : (
+              <ExecutionLog title={currentTitle} steps={currentSteps} />
+            )}
             <ContextPanel {...contextContent} />
           </div>
         )}

@@ -107,7 +107,7 @@ const Workflow = () => {
     setIsSimulating(true);
     setOutcome("running");
     let step = 0;
-    const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s"];
+    const durations = ["1.0s", "2.8s", "3.4s", "2.1s", "1.9s", "1.4s"];
     const lcStageId = isNegotiating ? 1 : 3;
 
     const advance = () => {

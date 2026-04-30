@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { ProcessRail } from "@/components/workflow/ProcessRail";
 import { ExecutionLog } from "@/components/workflow/ExecutionLog";
 import { LCStepsVisual } from "@/components/workflow/LCStepsVisual";
+import { ChecksMetrics } from "@/components/workflow/ChecksMetrics";
 import { ContextPanel } from "@/components/workflow/ContextPanel";
 import { LCIssuanceResult } from "@/components/workflow/LCIssuanceResult";
 import { FailureUploadPanel } from "@/components/workflow/FailureUploadPanel";

@@ -313,6 +313,10 @@ const Workflow = () => {
         {/* Process Rail */}
         <ProcessRail stages={stages} />
 
+        {/* Validation Checks Metrics — Negotiating Bank only */}
+        {isNegotiating && <ChecksMetrics />}
+
+
         {/* Simulation Controls */}
         {!isSimulating && outcome === "running" && (
           <div className="flex flex-wrap items-center gap-3 p-4 rounded-lg border border-border bg-card shadow-sm">

@@ -17,7 +17,7 @@ const RoleContext = createContext<RoleContextType>({
 export const useRole = () => useContext(RoleContext);
 
 export const RoleProvider = ({ children }: { children: ReactNode }) => {
-  const [role, setRole] = useState<BankRole>(null);
+  const [role, setRole] = useState<BankRole>("issuing");
 
   const roleName = role === "issuing" ? "Issuing Bank" : role === "negotiating" ? "Negotiating Bank" : "";
 

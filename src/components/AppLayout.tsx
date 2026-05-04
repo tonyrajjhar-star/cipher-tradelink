@@ -40,6 +40,7 @@ const menuSections = [
     items: [
       { title: "Create Transaction", icon: PlusCircle, path: "/create" },
       { title: "Validation", icon: ShieldCheck, path: "/workflow" },
+      { title: "Audit Trail", icon: History, path: "/workflow#audit" },
     ],
   },
   {

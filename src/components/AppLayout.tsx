@@ -6,14 +6,33 @@ import {
   Settings,
   Search,
   Bell,
-  User,
   ChevronRight,
   LogOut,
   ShieldCheck,
+  ChevronDown,
+  History,
+  UserCircle2,
+  BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BrandLogo } from "@/components/BrandLogo";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const DEMO_USER = {
+  name: "Aisha Al-Rashid",
+  role: "Manager",
+  title: "Senior Trade Officer",
+  lastLogin: "Apr 10, 2026 · 09:14",
+  initials: "AA",
+};
 
 const menuSections = [
   {

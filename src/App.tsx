@@ -7,6 +7,7 @@ import { RoleProvider } from "@/contexts/RoleContext";
 import Login from "./pages/Login";
 import Workflow from "./pages/Workflow";
 import CreateTransaction from "./pages/CreateTransaction";
+import History from "./pages/History";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 import { ThemeApplier } from "./components/ThemeApplier";
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Login />} />
             <Route path="/create" element={<CreateTransaction />} />
             <Route path="/workflow" element={<Workflow />} />
+            <Route path="/history" element={<History />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

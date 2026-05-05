@@ -162,7 +162,7 @@ export const ChecksMetrics = () => {
         key={m.key}
         onClick={() => setOpenKey(open ? null : m.key)}
         className={cn(
-          "group relative text-left rounded-xl border p-4 transition-all",
+          "group relative text-left rounded-xl border p-4 transition-all flex flex-col h-full min-h-[160px]",
           t.bg,
           t.border,
           open && "ring-2 ring-offset-1 ring-primary/30 shadow-sm"
@@ -244,7 +244,7 @@ export const ChecksMetrics = () => {
       </div>
 
       {/* Summary metrics */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 auto-rows-fr gap-3 mb-5">
         {summary.map(renderCard)}
       </div>
 
@@ -258,7 +258,7 @@ export const ChecksMetrics = () => {
       </div>
 
       {/* Breakdown grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 auto-rows-fr gap-3">
         {breakdown.map(renderCard)}
       </div>
     </div>

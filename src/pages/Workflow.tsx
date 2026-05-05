@@ -23,7 +23,6 @@ import { FailureUploadPanel } from "@/components/workflow/FailureUploadPanel";
 import { Stage3SuccessModal } from "@/components/workflow/Stage3SuccessModal";
 import { NegotiatingDecision } from "@/components/workflow/NegotiatingDecision";
 import { DocumentChecksTable } from "@/components/workflow/DocumentChecksTable";
-import { AuditTrail } from "@/components/workflow/AuditTrail";
 import type { Stage, ValidationStep } from "@/components/workflow/WorkflowTypes";
 
 type WorkflowOutcome = "running" | "success" | "failed" | "hold";
@@ -400,13 +399,12 @@ const Workflow = () => {
 
         {/* Active Stage Detail (while Stages 2/3 running) */}
         {outcome === "running" && (activeStage || isSimulating) && (
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div>
             {currentPhase === "lc" ? (
               <LCStepsVisual title={currentTitle} steps={currentSteps} />
             ) : (
               <ExecutionLog title={currentTitle} steps={currentSteps} />
             )}
-            <ContextPanel {...contextContent} />
           </div>
         )}
 
@@ -437,15 +435,10 @@ const Workflow = () => {
               </div>
             </div>
 
-            {/* While running: process steps + context */}
+            {/* While running: process steps */}
             {stage4Outcome === "running" && (
-              <div className="grid lg:grid-cols-3 gap-6">
+              <div>
                 <LCStepsVisual title="Document Verification Pipeline" steps={stage4StepsState} />
-                <ContextPanel
-                  whatsHappening="Negotiating Bank is examining all 9 beneficiary documents against LC terms under UCP 600."
-                  whatToDo="Monitor cross-document checks. Discrepancies will surface in the heat-map below."
-                  ifNothing="Examination completes within SLA. Decision is auto-recorded and notified to all parties."
-                />
               </div>
             )}
 
@@ -459,11 +452,6 @@ const Workflow = () => {
             )}
           </div>
         )}
-
-        {/* ===================== HISTORY & AUDIT TRAIL ===================== */}
-        <div id="audit" className="pt-4">
-          <AuditTrail />
-        </div>
       </div>
 
       {/* Stage 3 → Stage 4 transition modal */}

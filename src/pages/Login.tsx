@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import loginBg from "@/assets/login-tradeflow.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,7 +28,13 @@ const Login = () => {
   return (
     <div className="min-h-screen flex bg-background">
       {/* Left: Brand panel */}
-      <div className="hidden lg:flex w-[55%] relative overflow-hidden bg-[#3386C3]">
+      <div className="hidden lg:flex w-[55%] relative overflow-hidden bg-[#0A1828]">
+        <img
+          src={loginBg}
+          alt="Global trade flow visualization"
+          className="absolute inset-0 w-full h-full object-cover opacity-90"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A1828]/60 via-[#0A1828]/30 to-[#0A1828]/80" />
         <div className="relative z-10 flex flex-col justify-center p-12 text-white w-full">
           <div className="flex items-center gap-3 mb-10">
             <div className="w-11 h-11 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center">

@@ -4,6 +4,7 @@ import { Upload, FileText, ArrowRight, CheckCircle2, X, ShieldCheck, Lock, Clock
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { AuditTrail } from "@/components/workflow/AuditTrail";
 
 const CreateTransaction = () => {
   const [uploadedFile, setUploadedFile] = useState<string | null>(null);
@@ -15,33 +16,9 @@ const CreateTransaction = () => {
 
   return (
     <AppLayout>
-      <div className="max-w-4xl mx-auto space-y-6 animate-slide-up">
-        {/* Header — Rosano-style banner */}
-        <div className="relative overflow-hidden rounded-lg bg-card border border-border shadow-sm">
-          <div className="absolute top-0 left-0 bottom-0 w-1 bg-secondary" />
-          <div className="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-accent/70 blur-3xl" />
-          <div className="relative p-6 flex items-center gap-5">
-            <div className="relative w-14 h-14 shrink-0">
-              <div className="absolute inset-0 rounded-2xl bg-primary blur-lg opacity-30 translate-y-1" />
-              <div className="relative w-14 h-14 rounded-2xl bg-primary flex items-center justify-center shadow-elegant">
-                <Upload className="w-7 h-7 text-primary-foreground" strokeWidth={2} />
-              </div>
-            </div>
-            <div className="flex-1">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-secondary font-semibold mb-1">
-                Step 1 — Application Intake
-              </p>
-              <h2 className="text-2xl font-bold text-foreground">Create Transaction</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Upload your consolidated trade finance application package to initiate a new transaction.
-              </p>
-            </div>
-          </div>
-        </div>
-
+      <div className="max-w-6xl mx-auto space-y-6 animate-slide-up">
         {/* Upload */}
         <div className="rounded-lg bg-card border border-border shadow-sm overflow-hidden">
-          {/* Section header */}
           <div className="px-6 py-4 border-b border-border bg-muted/40 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4 text-primary" />
@@ -59,7 +36,6 @@ const CreateTransaction = () => {
                 onClick={handleUpload}
               >
                 <div className="relative">
-                  {/* Peach circle backdrop */}
                   <div className="relative w-28 h-28 mx-auto mb-5 flex items-center justify-center">
                     <div className="absolute inset-0 rounded-full bg-accent" />
                     <div className="relative w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-elegant group-hover:bg-secondary transition-colors">
@@ -104,7 +80,6 @@ const CreateTransaction = () => {
               </div>
             )}
 
-            {/* Trust micro-row */}
             <div className="grid grid-cols-3 gap-3 mt-5">
               {[
                 { Icon: Lock, label: "End-to-end encrypted" },
@@ -139,6 +114,9 @@ const CreateTransaction = () => {
             </Button>
           </div>
         </div>
+
+        {/* History section */}
+        <AuditTrail />
       </div>
     </AppLayout>
   );

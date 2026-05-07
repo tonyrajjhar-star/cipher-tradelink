@@ -115,8 +115,6 @@ const CreateTransaction = () => {
           </div>
         </div>
 
-        {/* History section */}
-        <AuditTrail />
       </div>
     </AppLayout>
   );

@@ -7,12 +7,13 @@ import {
   Search,
   Bell,
   ChevronRight,
+  ChevronDown,
   LogOut,
   ShieldCheck,
-  ChevronDown,
   History,
   UserCircle2,
   BadgeCheck,
+  Handshake,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

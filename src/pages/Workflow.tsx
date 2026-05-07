@@ -179,48 +179,6 @@ const Workflow = () => {
     }, 1800);
   }, []);
 
-  // Stage 4 simulation
-  const startStage4 = useCallback(() => {
-    setShowStage3Modal(false);
-    setStage4Outcome("running");
-    setStages((prev) => prev.map((s) =>
-      s.id === 4 ? { ...s, status: "active" as const, confidence: 0, lastAction: now() } : s
-    ));
-    // Smooth scroll to stage 4 area
-    setTimeout(() => {
-      document.getElementById("stage-4")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 200);
-
-    let step = 0;
-    const durations = ["2.1s", "4.6s", "3.8s", "5.2s", "1.4s"];
-    const advance = () => {
-      if (step >= stage4Steps.length) {
-        // 70% pass, 30% fail
-        const pass = Math.random() > 0.3;
-        setStages((prev) => prev.map((s) =>
-          s.id === 4
-            ? { ...s, status: pass ? "completed" as const : "failed" as const, confidence: 100, lastAction: now() }
-            : s
-        ));
-        setStage4Outcome(pass ? "pass" : "fail");
-        return;
-      }
-      setStage4StepsState((prev) => prev.map((s, i) =>
-        i === step ? { ...s, status: "running" as const } : s
-      ));
-      setStages((prev) => prev.map((s) =>
-        s.id === 4 ? { ...s, confidence: Math.round((step / stage4Steps.length) * 100) } : s
-      ));
-      setTimeout(() => {
-        setStage4StepsState((prev) => prev.map((s, i) =>
-          i === step ? { ...s, status: "completed" as const, duration: durations[step] } : s
-        ));
-        step++;
-        setTimeout(advance, 400);
-      }, 1100);
-    };
-    advance();
-  }, []);
 
   const handleRetry = () => {
     setSanctionSteps(sanctionsSteps);

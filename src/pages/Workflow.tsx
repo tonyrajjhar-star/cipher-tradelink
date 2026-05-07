@@ -246,7 +246,6 @@ const Workflow = () => {
       { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },
       { id: 2, title: "Sanctions Screening & Risk Control", status: "active", confidence: 68, lastAction: now() },
       { id: 3, title: "LC Issuance", status: "pending" },
-      { id: 4, title: "Negotiating Bank — Document Verification", status: "pending" },
     ]);
     setCurrentPhase("sanctions");
     setOutcome("running");

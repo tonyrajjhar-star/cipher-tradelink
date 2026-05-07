@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Workflow from "./pages/Workflow";
 import CreateTransaction from "./pages/CreateTransaction";
 import History from "./pages/History";
+import NegotiatingBank from "./pages/NegotiatingBank";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 import { ThemeApplier } from "./components/ThemeApplier";

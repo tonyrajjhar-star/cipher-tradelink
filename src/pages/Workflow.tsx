@@ -190,8 +190,6 @@ const Workflow = () => {
     ]);
     setCurrentPhase("sanctions");
     setOutcome("running");
-    setStage4Outcome("idle");
-    setStage4StepsState(stage4Steps);
   };
 
   const activeStage = stages.find((s) => s.status === "active");

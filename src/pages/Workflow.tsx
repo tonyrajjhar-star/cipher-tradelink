@@ -304,27 +304,12 @@ const Workflow = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              {outcome === "success" && stage4Outcome === "idle" && (
+              {outcome === "success" && (
                 <Badge className="bg-secondary text-secondary-foreground border-0 text-xs uppercase tracking-wider">
                   <CheckCircle2 className="w-3 h-3 mr-1" /> LC Issued
                 </Badge>
               )}
-              {stage4Outcome === "running" && (
-                <Badge className="bg-[#3386C3] text-white border-0 text-xs uppercase tracking-wider">
-                  <Handshake className="w-3 h-3 mr-1" /> Stage 4 Active
-                </Badge>
-              )}
-              {stage4Outcome === "pass" && (
-                <Badge className="bg-emerald-600 text-white border-0 text-xs uppercase tracking-wider">
-                  <CheckCircle2 className="w-3 h-3 mr-1" /> Negotiation PASS
-                </Badge>
-              )}
-              {stage4Outcome === "fail" && (
-                <Badge className="bg-rose-600 text-white border-0 text-xs uppercase tracking-wider">
-                  <AlertTriangle className="w-3 h-3 mr-1" /> Negotiation FAIL
-                </Badge>
-              )}
-              {outcome === "running" && stage4Outcome === "idle" && (
+              {outcome === "running" && (
                 <Badge variant="outline" className="bg-accent text-primary border-secondary/30 text-xs uppercase tracking-wider">
                   <AlertTriangle className="w-3 h-3 mr-1" />
                   {currentPhase === "sanctions" ? "Screening" : "LC Issuance"}

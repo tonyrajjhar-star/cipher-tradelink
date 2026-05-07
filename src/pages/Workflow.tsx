@@ -20,7 +20,6 @@ import { Stage3SuccessModal } from "@/components/workflow/Stage3SuccessModal";
 import type { Stage, ValidationStep } from "@/components/workflow/WorkflowTypes";
 
 type WorkflowOutcome = "running" | "success" | "failed" | "hold";
-type Stage4Outcome = "idle" | "running" | "pass" | "fail";
 
 const sanctionsSteps: ValidationStep[] = [
   { label: "Initiating AML & Sanctions Workflow", status: "completed", duration: "1.2s", explanation: "Establishes secure connection to sanctions databases and initializes screening parameters." },

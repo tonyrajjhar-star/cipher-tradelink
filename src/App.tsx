@@ -27,6 +27,7 @@ const App = () => (
             <Route path="/" element={<Login />} />
             <Route path="/create" element={<CreateTransaction />} />
             <Route path="/workflow" element={<Workflow />} />
+            <Route path="/negotiating" element={<NegotiatingBank />} />
             <Route path="/history" element={<History />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<NotFound />} />

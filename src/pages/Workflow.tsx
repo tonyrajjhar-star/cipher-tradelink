@@ -8,21 +8,15 @@ import {
   ShieldCheck,
   ScanSearch,
   FileSearch,
-  Landmark,
-  Handshake,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProcessRail } from "@/components/workflow/ProcessRail";
 import { ExecutionLog } from "@/components/workflow/ExecutionLog";
 import { LCStepsVisual } from "@/components/workflow/LCStepsVisual";
-import { ChecksMetrics } from "@/components/workflow/ChecksMetrics";
-import { ContextPanel } from "@/components/workflow/ContextPanel";
 import { LCIssuanceResult } from "@/components/workflow/LCIssuanceResult";
 import { FailureUploadPanel } from "@/components/workflow/FailureUploadPanel";
 import { Stage3SuccessModal } from "@/components/workflow/Stage3SuccessModal";
-import { NegotiatingDecision } from "@/components/workflow/NegotiatingDecision";
-import { DocumentChecksTable } from "@/components/workflow/DocumentChecksTable";
 import type { Stage, ValidationStep } from "@/components/workflow/WorkflowTypes";
 
 type WorkflowOutcome = "running" | "success" | "failed" | "hold";

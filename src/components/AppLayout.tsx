@@ -39,8 +39,15 @@ const menuSections = [
   {
     label: "Workflow",
     items: [
-      { title: "Create Transaction", icon: PlusCircle, path: "/create" },
-      { title: "Validation", icon: ShieldCheck, path: "/workflow" },
+      {
+        title: "Create Transaction",
+        icon: PlusCircle,
+        path: "/create",
+        children: [
+          { title: "Validation", icon: ShieldCheck, path: "/workflow" },
+        ],
+      },
+      { title: "Negotiating Bank", icon: Handshake, path: "/negotiating" },
       { title: "History", icon: History, path: "/history" },
     ],
   },

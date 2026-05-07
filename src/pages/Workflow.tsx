@@ -38,13 +38,6 @@ const lcIssuanceSteps: ValidationStep[] = [
   { label: "Document Verification Process", status: "pending", explanation: "Final document verification: signatures, stamps, and tamper-evidence checks before issuance." },
 ];
 
-const stage4Steps: ValidationStep[] = [
-  { label: "Receiving Beneficiary Documents", status: "pending", explanation: "Intake of all 9 trade documents from the beneficiary's bank for examination." },
-  { label: "OCR & Field Extraction Across Documents", status: "pending", explanation: "Extracts structured fields from each document for cross-referencing against LC terms." },
-  { label: "Cross-Document Consistency Checks", status: "pending", explanation: "Verifies amount, dates, parties, and shipment details match across all documents." },
-  { label: "UCP 600 Discrepancy Detection", status: "pending", explanation: "Applies UCP 600 articles to identify any discrepancies versus the LC." },
-  { label: "Decisioning & Negotiation Outcome", status: "pending", explanation: "Final pass/fail decision with reason codes per UCP 600." },
-];
 
 const failReasons = [
   "Sanctioned entity match detected: Counterparty flagged on OFAC SDN List (confidence: 94%).",

@@ -7,12 +7,13 @@ import {
   Search,
   Bell,
   ChevronRight,
+  ChevronDown,
   LogOut,
   ShieldCheck,
-  ChevronDown,
   History,
   UserCircle2,
   BadgeCheck,
+  Handshake,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,8 +39,15 @@ const menuSections = [
   {
     label: "Workflow",
     items: [
-      { title: "Create Transaction", icon: PlusCircle, path: "/create" },
-      { title: "Validation", icon: ShieldCheck, path: "/workflow" },
+      {
+        title: "Create Transaction",
+        icon: PlusCircle,
+        path: "/create",
+        children: [
+          { title: "Validation", icon: ShieldCheck, path: "/workflow" },
+        ],
+      },
+      { title: "Negotiating Bank", icon: Handshake, path: "/negotiating" },
       { title: "History", icon: History, path: "/history" },
     ],
   },
@@ -87,23 +95,47 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
                 {section.label}
               </p>
               <div className="space-y-1">
-                {section.items.map((item) => {
+                {section.items.map((item: any) => {
                   const Icon = item.icon;
                   const active = location.pathname === item.path;
+                  const childActive = item.children?.some((c: any) => location.pathname === c.path);
                   return (
-                    <button
-                      key={item.path}
-                      onClick={() => navigate(item.path)}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all relative group ${
-                        active
-                          ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-glow"
-                          : "text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent"
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                      <span>{item.title}</span>
-                      {active && <ChevronRight className="w-3.5 h-3.5 ml-auto" />}
-                    </button>
+                    <div key={item.path}>
+                      <button
+                        onClick={() => navigate(item.path)}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all relative group ${
+                          active
+                            ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-glow"
+                            : "text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent"
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        <span>{item.title}</span>
+                        {active && <ChevronRight className="w-3.5 h-3.5 ml-auto" />}
+                      </button>
+                      {item.children && (active || childActive) && (
+                        <div className="mt-1 ml-3 pl-3 border-l border-sidebar-border space-y-1">
+                          {item.children.map((child: any) => {
+                            const ChildIcon = child.icon;
+                            const cActive = location.pathname === child.path;
+                            return (
+                              <button
+                                key={child.path}
+                                onClick={() => navigate(child.path)}
+                                className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-md text-xs transition-all ${
+                                  cActive
+                                    ? "bg-sidebar-primary/15 text-sidebar-foreground font-semibold"
+                                    : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent"
+                                }`}
+                              >
+                                <ChildIcon className="w-3.5 h-3.5" />
+                                <span>{child.title}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>

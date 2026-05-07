@@ -65,9 +65,6 @@ const Workflow = () => {
   const [isSimulating, setIsSimulating] = useState(false);
   const [showStage3Modal, setShowStage3Modal] = useState(false);
 
-  // Stage 4 state
-  const [stage4Outcome, setStage4Outcome] = useState<Stage4Outcome>("idle");
-  const [stage4StepsState, setStage4StepsState] = useState<ValidationStep[]>(stage4Steps);
 
   const now = () => {
     const d = new Date();

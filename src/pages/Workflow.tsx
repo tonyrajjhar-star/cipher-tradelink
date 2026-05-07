@@ -371,20 +371,8 @@ const Workflow = () => {
         )}
 
         {/* Success: LC Documents — Issuing */}
-        {outcome === "success" && stage4Outcome === "idle" && (
-          <>
-            <LCIssuanceResult format="pdf" />
-            {/* Manual proceed if user dismisses modal */}
-            <div className="flex justify-end">
-              <Button
-                onClick={startStage4}
-                className="text-sm font-semibold gap-2 bg-gradient-to-r from-[#3386C3] to-[#1F5E8A] hover:opacity-90 text-white border-0"
-              >
-                <Handshake className="w-4 h-4" />
-                Proceed to Stage 4 — Negotiating Bank
-              </Button>
-            </div>
-          </>
+        {outcome === "success" && (
+          <LCIssuanceResult format="pdf" />
         )}
 
         {/* Failed / Hold (Stage 2) */}
@@ -405,58 +393,13 @@ const Workflow = () => {
             )}
           </div>
         )}
-
-        {/* ===================== STAGE 4 — NEGOTIATING BANK ===================== */}
-        {stage4Outcome !== "idle" && (
-          <div id="stage-4" className="space-y-6 pt-4">
-            {/* Stage 4 hero divider */}
-            <div className="relative overflow-hidden rounded-2xl border-2 border-[#3386C3]/30 bg-gradient-to-br from-[#3386C3]/10 via-card to-card p-6 shadow-elegant">
-              <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#3386C3]/15 blur-3xl" />
-              <div className="relative flex items-center gap-4 flex-wrap">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#3386C3] to-[#1F5E8A] flex items-center justify-center shadow-elegant">
-                  <Handshake className="w-7 h-7 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#1F5E8A] mb-1">
-                    Stage 4 of 4 · Continued from LC Issuance
-                  </p>
-                  <h3 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight">
-                    Negotiating Bank — Document Verification
-                  </h3>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    The Issuing Bank now hands off to the Negotiating Bank workflow for examination & decisioning.
-                  </p>
-                </div>
-                <Badge variant="outline" className="bg-[#3386C3]/10 text-[#1F5E8A] border-[#3386C3]/30 text-xs">
-                  <Landmark className="w-3 h-3 mr-1" /> Integrated Flow
-                </Badge>
-              </div>
-            </div>
-
-            {/* While running: process steps */}
-            {stage4Outcome === "running" && (
-              <div>
-                <LCStepsVisual title="Document Verification Pipeline" steps={stage4StepsState} />
-              </div>
-            )}
-
-            {/* When decisioned */}
-            {(stage4Outcome === "pass" || stage4Outcome === "fail") && (
-              <>
-                <NegotiatingDecision outcome={stage4Outcome} />
-                <ChecksMetrics />
-                <DocumentChecksTable />
-              </>
-            )}
-          </div>
-        )}
       </div>
 
-      {/* Stage 3 → Stage 4 transition modal */}
+      {/* Stage 3 success — generated tracker ID modal */}
       <Stage3SuccessModal
         open={showStage3Modal}
         onClose={() => setShowStage3Modal(false)}
-        onProceed={startStage4}
+        onProceed={() => setShowStage3Modal(false)}
       />
     </AppLayout>
   );

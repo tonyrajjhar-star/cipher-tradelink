@@ -4,7 +4,7 @@ import { Upload, FileText, ArrowRight, CheckCircle2, X, ShieldCheck, Lock, Clock
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { AuditTrail } from "@/components/workflow/AuditTrail";
+
 
 const CreateTransaction = () => {
   const [uploadedFile, setUploadedFile] = useState<string | null>(null);

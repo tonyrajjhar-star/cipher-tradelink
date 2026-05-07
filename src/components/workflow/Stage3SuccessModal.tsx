@@ -1,4 +1,5 @@
-import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, Sparkles, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 

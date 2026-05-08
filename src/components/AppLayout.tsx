@@ -44,20 +44,20 @@ const menuSections = [
     items: [
       {
         title: "Create Transaction",
-        icon: PlusCircle,
+        icon: FileSignature,
         path: "/create",
         children: [
-          { title: "Validation", icon: ShieldCheck, path: "/workflow" },
+          { title: "Validation", icon: ScanSearch, path: "/workflow" },
         ],
       },
-      { title: "Negotiating Bank", icon: Handshake, path: "/negotiating" },
-      { title: "History", icon: History, path: "/history" },
+      { title: "Negotiating Bank", icon: Briefcase, path: "/negotiating" },
+      { title: "History", icon: ClockIcon, path: "/history" },
     ],
   },
   {
     label: "System",
     items: [
-      { title: "Settings", icon: Settings, path: "/settings" },
+      { title: "Settings", icon: Cog, path: "/settings" },
     ],
   },
 ];

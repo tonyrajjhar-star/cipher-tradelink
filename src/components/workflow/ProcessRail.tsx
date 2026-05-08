@@ -86,7 +86,7 @@ const StatusBadge = ({ status }: { status: StageStatus }) => {
   );
 };
 
-const Stage3DIcon = ({
+const StageFlatIcon = ({
   Icon,
   status,
   number,
@@ -98,36 +98,21 @@ const Stage3DIcon = ({
   const t = tone(status);
   const isPending = status === "pending";
   return (
-    <div className="relative w-16 h-16 shrink-0">
-      {/* base plinth shadow */}
+    <div className="relative w-12 h-12 shrink-0">
       <div
-        className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-14 h-3 rounded-full blur-md opacity-70 bg-gradient-to-r ${t.plinth}`}
-      />
-      {/* back layer */}
-      <div
-        className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${t.plinth} translate-y-1 opacity-90`}
-      />
-      {/* front face */}
-      <div
-        className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${t.plinth} ring-1 ${t.ring} ${t.glow} flex items-center justify-center overflow-hidden`}
+        className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+          isPending ? "bg-muted text-muted-foreground" : t.flat
+        }`}
       >
-        {/* glossy highlight */}
-        <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/35 to-transparent" />
-        <Icon
-          className={`relative w-7 h-7 ${
-            isPending ? "text-muted-foreground" : "text-white drop-shadow"
-          }`}
-          strokeWidth={2.2}
-        />
-        {/* corner stage number */}
-        <span
-          className={`absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center bg-card border ${
-            isPending ? "text-muted-foreground border-border" : `${t.text} border-current`
-          }`}
-        >
-          {number}
-        </span>
+        <Icon className="w-6 h-6" strokeWidth={2} />
       </div>
+      <span
+        className={`absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center bg-card border ${
+          isPending ? "text-muted-foreground border-border" : `${t.text} border-current`
+        }`}
+      >
+        {number}
+      </span>
     </div>
   );
 };

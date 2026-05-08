@@ -18,54 +18,44 @@ const tone = (status: StageStatus) => {
   switch (status) {
     case "completed":
       return {
-        ring: "ring-emerald-300/60",
         chip: "bg-emerald-50 text-emerald-700 border-emerald-200",
-        glow: "shadow-[0_10px_30px_-12px_rgba(16,185,129,0.55)]",
-        plinth: "from-emerald-400 via-emerald-500 to-emerald-600",
-        bar: "bg-gradient-to-r from-emerald-400 to-emerald-600",
-        connector: "bg-gradient-to-r from-emerald-500 to-emerald-400",
+        flat: "bg-emerald-500 text-white",
+        bar: "bg-emerald-500",
+        connector: "bg-emerald-500",
         label: "Completed",
         text: "text-emerald-700",
       };
     case "active":
       return {
-        ring: "ring-primary/50",
         chip: "bg-primary/10 text-primary border-primary/30",
-        glow: "shadow-[0_14px_36px_-10px_hsl(var(--secondary)/0.55)]",
-        plinth: "from-[hsl(var(--secondary))] via-[hsl(var(--secondary))] to-[hsl(var(--secondary)/0.7)]",
-        bar: "bg-gradient-to-r from-[hsl(var(--secondary))] to-[hsl(var(--secondary)/0.6)]",
-        connector: "bg-gradient-to-r from-[hsl(var(--secondary))] to-muted",
+        flat: "bg-[hsl(var(--secondary))] text-white",
+        bar: "bg-[hsl(var(--secondary))]",
+        connector: "bg-[hsl(var(--secondary))]",
         label: "In Progress",
         text: "text-primary",
       };
     case "failed":
       return {
-        ring: "ring-destructive/50",
         chip: "bg-destructive/10 text-destructive border-destructive/30",
-        glow: "shadow-[0_10px_30px_-12px_rgba(239,68,68,0.55)]",
-        plinth: "from-rose-400 via-rose-500 to-rose-600",
-        bar: "bg-gradient-to-r from-rose-400 to-rose-600",
+        flat: "bg-rose-500 text-white",
+        bar: "bg-rose-500",
         connector: "bg-muted",
         label: "Failed",
         text: "text-destructive",
       };
     case "hold":
       return {
-        ring: "ring-amber-300/60",
         chip: "bg-amber-50 text-amber-700 border-amber-200",
-        glow: "shadow-[0_10px_30px_-12px_rgba(245,158,11,0.55)]",
-        plinth: "from-amber-300 via-amber-400 to-amber-500",
-        bar: "bg-gradient-to-r from-amber-400 to-amber-500",
+        flat: "bg-amber-500 text-white",
+        bar: "bg-amber-500",
         connector: "bg-muted",
         label: "On Hold",
         text: "text-amber-700",
       };
     default:
       return {
-        ring: "ring-border",
         chip: "bg-muted text-muted-foreground border-border",
-        glow: "",
-        plinth: "from-muted-foreground/30 via-muted-foreground/20 to-muted-foreground/10",
+        flat: "bg-muted text-muted-foreground",
         bar: "bg-muted",
         connector: "bg-muted",
         label: "Pending",
@@ -96,7 +86,7 @@ const StatusBadge = ({ status }: { status: StageStatus }) => {
   );
 };
 
-const Stage3DIcon = ({
+const StageFlatIcon = ({
   Icon,
   status,
   number,
@@ -108,36 +98,21 @@ const Stage3DIcon = ({
   const t = tone(status);
   const isPending = status === "pending";
   return (
-    <div className="relative w-16 h-16 shrink-0">
-      {/* base plinth shadow */}
+    <div className="relative w-12 h-12 shrink-0">
       <div
-        className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-14 h-3 rounded-full blur-md opacity-70 bg-gradient-to-r ${t.plinth}`}
-      />
-      {/* back layer */}
-      <div
-        className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${t.plinth} translate-y-1 opacity-90`}
-      />
-      {/* front face */}
-      <div
-        className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${t.plinth} ring-1 ${t.ring} ${t.glow} flex items-center justify-center overflow-hidden`}
+        className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+          isPending ? "bg-muted text-muted-foreground" : t.flat
+        }`}
       >
-        {/* glossy highlight */}
-        <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/35 to-transparent" />
-        <Icon
-          className={`relative w-7 h-7 ${
-            isPending ? "text-muted-foreground" : "text-white drop-shadow"
-          }`}
-          strokeWidth={2.2}
-        />
-        {/* corner stage number */}
-        <span
-          className={`absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center bg-card border ${
-            isPending ? "text-muted-foreground border-border" : `${t.text} border-current`
-          }`}
-        >
-          {number}
-        </span>
+        <Icon className="w-6 h-6" strokeWidth={2} />
       </div>
+      <span
+        className={`absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center bg-card border ${
+          isPending ? "text-muted-foreground border-border" : `${t.text} border-current`
+        }`}
+      >
+        {number}
+      </span>
     </div>
   );
 };
@@ -191,7 +166,7 @@ export const ProcessRail = ({ stages }: { stages: Stage[] }) => {
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <Stage3DIcon Icon={Icon} status={stage.status} number={stage.id} />
+                    <StageFlatIcon Icon={Icon} status={stage.status} number={stage.id} />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">

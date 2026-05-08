@@ -18,54 +18,44 @@ const tone = (status: StageStatus) => {
   switch (status) {
     case "completed":
       return {
-        ring: "ring-emerald-300/60",
         chip: "bg-emerald-50 text-emerald-700 border-emerald-200",
-        glow: "shadow-[0_10px_30px_-12px_rgba(16,185,129,0.55)]",
-        plinth: "from-emerald-400 via-emerald-500 to-emerald-600",
-        bar: "bg-gradient-to-r from-emerald-400 to-emerald-600",
-        connector: "bg-gradient-to-r from-emerald-500 to-emerald-400",
+        flat: "bg-emerald-500 text-white",
+        bar: "bg-emerald-500",
+        connector: "bg-emerald-500",
         label: "Completed",
         text: "text-emerald-700",
       };
     case "active":
       return {
-        ring: "ring-primary/50",
         chip: "bg-primary/10 text-primary border-primary/30",
-        glow: "shadow-[0_14px_36px_-10px_hsl(var(--secondary)/0.55)]",
-        plinth: "from-[hsl(var(--secondary))] via-[hsl(var(--secondary))] to-[hsl(var(--secondary)/0.7)]",
-        bar: "bg-gradient-to-r from-[hsl(var(--secondary))] to-[hsl(var(--secondary)/0.6)]",
-        connector: "bg-gradient-to-r from-[hsl(var(--secondary))] to-muted",
+        flat: "bg-[hsl(var(--secondary))] text-white",
+        bar: "bg-[hsl(var(--secondary))]",
+        connector: "bg-[hsl(var(--secondary))]",
         label: "In Progress",
         text: "text-primary",
       };
     case "failed":
       return {
-        ring: "ring-destructive/50",
         chip: "bg-destructive/10 text-destructive border-destructive/30",
-        glow: "shadow-[0_10px_30px_-12px_rgba(239,68,68,0.55)]",
-        plinth: "from-rose-400 via-rose-500 to-rose-600",
-        bar: "bg-gradient-to-r from-rose-400 to-rose-600",
+        flat: "bg-rose-500 text-white",
+        bar: "bg-rose-500",
         connector: "bg-muted",
         label: "Failed",
         text: "text-destructive",
       };
     case "hold":
       return {
-        ring: "ring-amber-300/60",
         chip: "bg-amber-50 text-amber-700 border-amber-200",
-        glow: "shadow-[0_10px_30px_-12px_rgba(245,158,11,0.55)]",
-        plinth: "from-amber-300 via-amber-400 to-amber-500",
-        bar: "bg-gradient-to-r from-amber-400 to-amber-500",
+        flat: "bg-amber-500 text-white",
+        bar: "bg-amber-500",
         connector: "bg-muted",
         label: "On Hold",
         text: "text-amber-700",
       };
     default:
       return {
-        ring: "ring-border",
         chip: "bg-muted text-muted-foreground border-border",
-        glow: "",
-        plinth: "from-muted-foreground/30 via-muted-foreground/20 to-muted-foreground/10",
+        flat: "bg-muted text-muted-foreground",
         bar: "bg-muted",
         connector: "bg-muted",
         label: "Pending",

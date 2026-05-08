@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { useRole } from "@/contexts/RoleContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  PlusCircle,
   Settings,
   Search,
   Bell,
@@ -13,7 +12,11 @@ import {
   History,
   UserCircle2,
   BadgeCheck,
-  Handshake,
+  FileSignature,
+  ScanSearch,
+  Briefcase,
+  ClockIcon,
+  Cog,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,20 +44,20 @@ const menuSections = [
     items: [
       {
         title: "Create Transaction",
-        icon: PlusCircle,
+        icon: FileSignature,
         path: "/create",
         children: [
-          { title: "Validation", icon: ShieldCheck, path: "/workflow" },
+          { title: "Validation", icon: ScanSearch, path: "/workflow" },
         ],
       },
-      { title: "Negotiating Bank", icon: Handshake, path: "/negotiating" },
-      { title: "History", icon: History, path: "/history" },
+      { title: "Negotiating Bank", icon: Briefcase, path: "/negotiating" },
+      { title: "History", icon: ClockIcon, path: "/history" },
     ],
   },
   {
     label: "System",
     items: [
-      { title: "Settings", icon: Settings, path: "/settings" },
+      { title: "Settings", icon: Cog, path: "/settings" },
     ],
   },
 ];
@@ -103,14 +106,25 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
                     <div key={item.path}>
                       <button
                         onClick={() => navigate(item.path)}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all relative group ${
+                        className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-lg text-sm transition-all relative group ${
                           active
-                            ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-glow"
+                            ? "bg-sidebar-primary/15 text-sidebar-foreground font-semibold shadow-glow"
                             : "text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent"
                         }`}
                       >
-                        <Icon className="w-4 h-4" />
-                        <span>{item.title}</span>
+                        <span
+                          className={`relative w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all ${
+                            active
+                              ? "bg-gradient-to-br from-sidebar-primary to-sidebar-primary/70 text-sidebar-primary-foreground shadow-md ring-1 ring-sidebar-primary/40"
+                              : "bg-sidebar-accent/60 text-sidebar-foreground/70 group-hover:bg-sidebar-primary/20 group-hover:text-sidebar-foreground"
+                          }`}
+                        >
+                          <Icon className="w-4 h-4" strokeWidth={2.2} />
+                          {active && (
+                            <span className="absolute inset-x-0 top-0 h-1/2 rounded-t-lg bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
+                          )}
+                        </span>
+                        <span className="truncate">{item.title}</span>
                         {active && <ChevronRight className="w-3.5 h-3.5 ml-auto" />}
                       </button>
                       {item.children && (active || childActive) && (

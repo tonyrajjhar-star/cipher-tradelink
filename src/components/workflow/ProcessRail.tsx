@@ -166,7 +166,7 @@ export const ProcessRail = ({ stages }: { stages: Stage[] }) => {
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <Stage3DIcon Icon={Icon} status={stage.status} number={stage.id} />
+                    <StageFlatIcon Icon={Icon} status={stage.status} number={stage.id} />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">

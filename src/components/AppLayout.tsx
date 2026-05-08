@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { useRole } from "@/contexts/RoleContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  PlusCircle,
   Settings,
   Search,
   Bell,
@@ -13,7 +12,11 @@ import {
   History,
   UserCircle2,
   BadgeCheck,
-  Handshake,
+  FileSignature,
+  ScanSearch,
+  Briefcase,
+  ClockIcon,
+  Cog,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

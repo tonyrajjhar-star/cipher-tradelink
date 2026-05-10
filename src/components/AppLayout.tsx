@@ -17,6 +17,8 @@ import {
   Briefcase,
   ClockIcon,
   Cog,
+  Workflow as WorkflowIcon,
+  CreditCard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,7 +52,9 @@ const menuSections = [
           { title: "Validation", icon: ScanSearch, path: "/workflow" },
         ],
       },
+      { title: "Negotiating Bank Process", icon: WorkflowIcon, path: "/negotiating-process" },
       { title: "Negotiating Bank", icon: Briefcase, path: "/negotiating" },
+      { title: "Debit Transaction", icon: CreditCard, path: "/debit-transaction" },
       { title: "History", icon: ClockIcon, path: "/history" },
     ],
   },

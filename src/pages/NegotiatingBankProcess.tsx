@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
+import { ProcessRail } from "@/components/workflow/ProcessRail";
+import type { Stage as RailStage, StageStatus as RailStatus } from "@/components/workflow/WorkflowTypes";
 import {
   Handshake,
   FileCheck2,

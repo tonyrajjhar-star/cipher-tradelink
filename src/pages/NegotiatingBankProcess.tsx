@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
+import { ProcessRail } from "@/components/workflow/ProcessRail";
+import type { Stage as RailStage, StageStatus as RailStatus } from "@/components/workflow/WorkflowTypes";
 import {
   Handshake,
   FileCheck2,
@@ -171,6 +173,22 @@ const PipelinePage = ({ title, subtitle, stages, accent = "#3386C3" }: PipelineP
             />
           </div>
         </div>
+
+        {/* Process Pipeline (matches Create Transaction Validation style) */}
+        <ProcessRail
+          stages={stages.map((s, idx): RailStage => {
+            const st = statuses[idx];
+            const railStatus: RailStatus =
+              st === "completed" ? "completed" : st === "running" ? "active" : "pending";
+            return {
+              id: s.id,
+              title: s.title,
+              status: railStatus,
+              confidence: st === "completed" ? 100 : st === "running" ? 60 : undefined,
+              lastAction: st === "running" ? `Updated · ${stageTime}` : undefined,
+            };
+          })}
+        />
 
         {/* Stages */}
         <div className="space-y-4">

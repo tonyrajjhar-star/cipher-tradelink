@@ -118,9 +118,9 @@ const NegotiatingBank = () => {
         {/* Top Process Pipeline (always visible) */}
         <ProcessRail stages={stages} />
 
-        {/* Intake form (Tracker ID + Upload) */}
+        {/* Intake form (Tracker ID -> Supporting Docs -> Application Document) */}
         {phase === "intake" && (
-          <div className="grid lg:grid-cols-2 gap-6">
+          <div className="space-y-6">
             {/* Tracker ID */}
             <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
               <div className="px-5 py-3 border-b border-border bg-muted/40 flex items-center gap-2">
@@ -142,13 +142,55 @@ const NegotiatingBank = () => {
                 {trackerValid && (
                   <div className="flex items-center gap-1.5 text-[11px] text-emerald-700">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Tracker ID accepted — upload section unlocked.
+                    Tracker ID accepted — supporting documents and upload unlocked.
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Upload */}
+            {/* Supporting Documents (after tracker entered) */}
+            {trackerValid && (
+              <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden animate-slide-up">
+                <div className="px-5 py-3 border-b border-border bg-muted/40 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Paperclip className="w-4 h-4 text-primary" />
+                    <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+                      Supporting Documents
+                    </h3>
+                  </div>
+                  <Badge variant="outline" className="text-[10px] bg-emerald-50 text-emerald-700 border-emerald-200">
+                    {supportingDocs.length} attached
+                  </Badge>
+                </div>
+                <div className="p-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {supportingDocs.map((doc) => (
+                    <div
+                      key={doc.name}
+                      className="group flex items-center gap-3 p-3 rounded-lg border border-border bg-background hover:border-primary/40 hover:shadow-sm transition-all"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#3386C3]/15 to-[#1F5E8A]/10 flex items-center justify-center shrink-0">
+                        <FileText className="w-5 h-5 text-[#1F5E8A]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold text-foreground truncate">{doc.name}</p>
+                        <p className="text-[10px] text-muted-foreground">{doc.size}</p>
+                      </div>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => setPreviewDoc(doc.name)}
+                        className="text-muted-foreground hover:text-primary opacity-70 group-hover:opacity-100"
+                        title="Preview"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Application Document */}
             <div
               className={`rounded-xl border bg-card shadow-sm overflow-hidden transition-all ${
                 trackerValid ? "border-border" : "border-border opacity-60 pointer-events-none"
@@ -167,7 +209,7 @@ const NegotiatingBank = () => {
                   </Badge>
                 )}
               </div>
-              <div className="p-5">
+              <div className="p-5 space-y-4">
                 {!uploadedFile ? (
                   <div
                     className="relative border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-secondary hover:bg-accent/30 transition-all"
@@ -180,30 +222,60 @@ const NegotiatingBank = () => {
                     <p className="text-[11px] text-muted-foreground mt-1">PDF, DOC, XLSX — Max 25 MB</p>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border bg-accent/30">
-                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0">
-                      <FileText className="w-5 h-5 text-primary-foreground" />
+                  <>
+                    <div className="flex items-center gap-3 p-3 rounded-lg border border-border bg-accent/30">
+                      <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0">
+                        <FileText className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-foreground truncate">{uploadedFile}</p>
+                        <Badge variant="outline" className="mt-1 text-[10px] bg-card text-secondary border-secondary/30">
+                          <CheckCircle2 className="w-3 h-3 mr-1" /> Uploaded
+                        </Badge>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setUploadedFile(null)}
+                        className="text-muted-foreground hover:text-destructive"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-foreground truncate">{uploadedFile}</p>
-                      <Badge variant="outline" className="mt-1 text-[10px] bg-card text-secondary border-secondary/30">
-                        <CheckCircle2 className="w-3 h-3 mr-1" /> Uploaded
-                      </Badge>
+
+                    <div className="flex items-start gap-2.5 p-3 rounded-lg border border-[#3386C3]/30 bg-gradient-to-r from-[#3386C3]/10 to-transparent">
+                      <Sparkles className="w-4 h-4 text-[#1F5E8A] mt-0.5 shrink-0" />
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-[#1F5E8A]">
+                        These documents are given to AI for scrutiny and compliance check.
+                      </p>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setUploadedFile(null)}
-                      className="text-muted-foreground hover:text-destructive"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
+                  </>
                 )}
               </div>
             </div>
           </div>
         )}
+
+        {/* Document preview dialog */}
+        <Dialog open={!!previewDoc} onOpenChange={(o) => !o && setPreviewDoc(null)}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-base">
+                <FileText className="w-4 h-4 text-primary" />
+                {previewDoc}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="rounded-lg border border-dashed border-border bg-muted/30 h-[420px] flex flex-col items-center justify-center text-center p-6">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#3386C3] to-[#1F5E8A] flex items-center justify-center shadow-elegant mb-3">
+                <FileText className="w-8 h-8 text-white" />
+              </div>
+              <p className="text-sm font-semibold text-foreground">{previewDoc}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Secure preview — document content is rendered from the LC instrument vault.
+              </p>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Proceed action footer */}
         {phase === "intake" && (

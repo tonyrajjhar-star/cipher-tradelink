@@ -11,10 +11,14 @@ import {
   Lock,
   ShieldCheck,
   Landmark,
+  Eye,
+  Sparkles,
+  Paperclip,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ProcessRail } from "@/components/workflow/ProcessRail";
 import { LCStepsVisual } from "@/components/workflow/LCStepsVisual";
 import { ChecksMetrics } from "@/components/workflow/ChecksMetrics";

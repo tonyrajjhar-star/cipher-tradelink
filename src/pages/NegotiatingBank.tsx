@@ -42,6 +42,16 @@ const NegotiatingBank = () => {
   const [phase, setPhase] = useState<Phase>("intake");
   const [steps, setSteps] = useState<ValidationStep[]>(initialStage4Steps);
   const [outcome, setOutcome] = useState<"pass" | "fail">("pass");
+  const [previewDoc, setPreviewDoc] = useState<string | null>(null);
+
+  const supportingDocs = [
+    { name: "Commercial Invoice.pdf", size: "248 KB" },
+    { name: "Bill of Lading.pdf", size: "412 KB" },
+    { name: "Packing List.pdf", size: "186 KB" },
+    { name: "Certificate of Origin.pdf", size: "92 KB" },
+    { name: "Insurance Certificate.pdf", size: "154 KB" },
+    { name: "Inspection Report.pdf", size: "201 KB" },
+  ];
 
   const [stages, setStages] = useState<Stage[]>([
     { id: 1, title: "Application & Contract Validation", status: "completed", confidence: 100, lastAction: "Apr 10, 14:32" },

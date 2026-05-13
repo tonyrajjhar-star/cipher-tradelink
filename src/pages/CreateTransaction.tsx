@@ -1,13 +1,15 @@
 import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
-import { Upload, FileText, ArrowRight, CheckCircle2, X, ShieldCheck, Lock, Clock } from "lucide-react";
+import { Upload, FileText, ArrowRight, CheckCircle2, X, ShieldCheck, Lock, Clock, Eye, FileSignature, Calendar, User, Globe2, DollarSign, Files } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 
 const CreateTransaction = () => {
   const [uploadedFile, setUploadedFile] = useState<string | null>(null);
+  const [previewType, setPreviewType] = useState<null | "application" | "documents">(null);
   const navigate = useNavigate();
 
   const handleUpload = () => {
@@ -17,6 +19,57 @@ const CreateTransaction = () => {
   return (
     <AppLayout>
       <div className="max-w-6xl mx-auto space-y-6 animate-slide-up">
+        {/* Application Contract & Other Documents */}
+        <div className="rounded-lg bg-card border border-border shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-border bg-muted/40 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileSignature className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+                Application Contract & Other Documents
+              </h3>
+            </div>
+            <Badge variant="outline" className="text-[10px] bg-primary/10 text-primary border-primary/20 uppercase tracking-wider">
+              Auto-fetched
+            </Badge>
+          </div>
+          <div className="p-6 space-y-5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              {[
+                { Icon: Calendar, label: "Application Date", value: "Apr 12, 2026" },
+                { Icon: User, label: "Applicant Name", value: "Al Rajhi Trading Co." },
+                { Icon: Globe2, label: "Beneficiary Country", value: "Germany" },
+                { Icon: DollarSign, label: "LC Amount", value: "$2,450,000" },
+              ].map(({ Icon, label, value }) => (
+                <div key={label} className="rounded-lg border border-border bg-muted/30 p-3">
+                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <Icon className="w-3 h-3" /> {label}
+                  </div>
+                  <p className="mt-1.5 text-sm font-bold text-foreground">{value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-border">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 text-xs"
+                onClick={() => setPreviewType("application")}
+              >
+                <Eye className="w-3.5 h-3.5" /> Preview Application
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 text-xs"
+                onClick={() => setPreviewType("documents")}
+              >
+                <Files className="w-3.5 h-3.5" /> Preview Documents
+              </Button>
+            </div>
+          </div>
+        </div>
+
         {/* Upload */}
         <div className="rounded-lg bg-card border border-border shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-border bg-muted/40 flex items-center justify-between">
@@ -116,6 +169,66 @@ const CreateTransaction = () => {
         </div>
 
       </div>
+
+      <Dialog open={previewType !== null} onOpenChange={(o) => !o && setPreviewType(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              {previewType === "application" ? (
+                <><FileSignature className="w-4 h-4 text-primary" /> Application Preview</>
+              ) : (
+                <><Files className="w-4 h-4 text-primary" /> Supporting Documents Preview</>
+              )}
+            </DialogTitle>
+          </DialogHeader>
+          {previewType === "application" ? (
+            <div className="rounded-lg bg-gradient-to-br from-muted/60 to-muted/20 border border-border p-6 space-y-3 text-sm">
+              <div className="flex items-center justify-between border-b border-border pb-2">
+                <p className="font-bold text-foreground">LC Application Form · LCR-2026-1004</p>
+                <Badge variant="outline" className="text-[10px]">Signed</Badge>
+              </div>
+              {[
+                ["Application Date", "Apr 12, 2026"],
+                ["Applicant Name", "Al Rajhi Trading Co."],
+                ["Beneficiary", "Siemens AG, Munich"],
+                ["Beneficiary Country", "Germany"],
+                ["LC Amount", "$2,450,000 USD"],
+                ["Tenor", "90 days sight"],
+                ["Goods", "Industrial turbines & spares"],
+              ].map(([k, v]) => (
+                <div key={k} className="grid grid-cols-2 text-xs">
+                  <span className="text-muted-foreground uppercase tracking-wider">{k}</span>
+                  <span className="font-semibold text-foreground">{v}</span>
+                </div>
+              ))}
+              <p className="text-[11px] text-muted-foreground pt-2 border-t border-border">
+                Rendered from the secure LC instrument vault. Read-only.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {[
+                ["Commercial Invoice.pdf", "248 KB"],
+                ["Bill of Lading.pdf", "412 KB"],
+                ["Packing List.pdf", "186 KB"],
+                ["Certificate of Origin.pdf", "92 KB"],
+                ["Insurance Certificate.pdf", "154 KB"],
+              ].map(([n, s]) => (
+                <div key={n} className="flex items-center gap-3 p-3 rounded-lg border border-border bg-muted/30">
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-foreground truncate">{n}</p>
+                    <p className="text-[11px] text-muted-foreground">{s}</p>
+                  </div>
+                  <Eye className="w-4 h-4 text-muted-foreground" />
+                </div>
+              ))}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 };

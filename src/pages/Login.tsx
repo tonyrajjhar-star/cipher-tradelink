@@ -68,112 +68,26 @@ const Login = () => {
               <TrendingUp className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold tracking-[0.18em]">TRADEFLOW</h1>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/60">Banking for Trade</p>
+              <h1 className="text-base font-extrabold tracking-[0.18em]">TCS TRADEFIN AI</h1>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-white/60">Solution</p>
             </div>
           </div>
 
-          {/* Headline + 2D infographic */}
-          <div className="space-y-10">
-            <div>
-              <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/80">
-                  Letter of Credit Platform
-                </span>
-              </div>
-              <h2 className="text-4xl xl:text-5xl font-extrabold leading-[1.05] tracking-tight max-w-md">
-                Issue, validate &<br />
-                negotiate Letters<br />
-                of Credit — securely.
-              </h2>
-              <p className="mt-4 text-sm text-white/65 max-w-sm leading-relaxed">
-                A unified workspace for Issuing and Negotiating banks. Built on UCP 600 with auditable AI scrutiny.
-              </p>
+          {/* Headline */}
+          <div>
+            <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/80">
+                Letter of Credit Platform
+              </span>
             </div>
-
-            {/* 2D Trade-flow infographic */}
-            <div className="relative max-w-lg">
-              {/* connecting dotted track */}
-              <svg
-                className="absolute left-0 right-0 top-[34px] w-full h-2"
-                viewBox="0 0 480 8"
-                fill="none"
-                preserveAspectRatio="none"
-              >
-                <line
-                  x1="40"
-                  y1="4"
-                  x2="440"
-                  y2="4"
-                  stroke="#3386C3"
-                  strokeWidth="2"
-                  strokeDasharray="4 6"
-                  strokeLinecap="round"
-                />
-              </svg>
-
-              <div className="relative grid grid-cols-4 gap-2">
-                {[
-                  { icon: Building2, label: "Applicant", color: "bg-[#3386C3]" },
-                  { icon: ScrollText, label: "Issue LC", color: "bg-cyan-500" },
-                  { icon: Ship, label: "Shipment", color: "bg-amber-500" },
-                  { icon: Banknote, label: "Settle", color: "bg-emerald-500" },
-                ].map((s, i) => {
-                  const Icon = s.icon;
-                  return (
-                    <div key={i} className="flex flex-col items-center text-center">
-                      <div
-                        className={`relative w-[68px] h-[68px] rounded-2xl ${s.color} flex items-center justify-center shadow-lg ring-4 ring-[#0A1828]`}
-                      >
-                        <Icon className="w-7 h-7 text-white" strokeWidth={2.2} />
-                        <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-white text-[10px] font-extrabold text-[#0A1828] flex items-center justify-center">
-                          {i + 1}
-                        </span>
-                      </div>
-                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-white/85">
-                        {s.label}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Stat tiles */}
-              <div className="mt-8 grid grid-cols-3 gap-3">
-                {[
-                  { k: "12,480", v: "LCs issued", icon: FileCheck2, tint: "text-cyan-300" },
-                  { k: "$3.2B", v: "Settled volume", icon: CircleDollarSign, tint: "text-emerald-300" },
-                  { k: "99.97%", v: "Audit pass rate", icon: CheckCircle2, tint: "text-amber-300" },
-                ].map((t, i) => {
-                  const Icon = t.icon;
-                  return (
-                    <div
-                      key={i}
-                      className="rounded-xl bg-white/5 border border-white/10 p-3 backdrop-blur-sm"
-                    >
-                      <Icon className={`w-4 h-4 ${t.tint}`} />
-                      <p className="mt-2 text-lg font-extrabold text-white leading-none">{t.k}</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-wider text-white/55">{t.v}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <h2 className="text-4xl xl:text-5xl font-extrabold leading-[1.1] tracking-tight max-w-xl">
+              Manage End-to-End Flow for LCs Efficiently with AI
+            </h2>
           </div>
 
-          {/* Footer trust strip */}
-          <div className="flex items-center gap-5 text-[10px] uppercase tracking-[0.2em] text-white/50">
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              UCP 600
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Lock className="w-3.5 h-3.5 text-cyan-300" />
-              SOC 2 · ISO 27001
-            </span>
-            <span>SWIFT MT700 ready</span>
-          </div>
+          {/* Footer spacer */}
+          <div />
         </div>
       </div>
 
@@ -188,8 +102,8 @@ const Login = () => {
               <TrendingUp className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold tracking-[0.18em] text-foreground">TRADEFLOW</h1>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Banking for Trade</p>
+              <h1 className="text-base font-extrabold tracking-[0.18em] text-foreground">TCS TRADEFIN AI</h1>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Solution</p>
             </div>
           </div>
 
@@ -202,7 +116,7 @@ const Login = () => {
             </div>
             <h2 className="text-3xl font-extrabold text-foreground tracking-tight">Welcome back</h2>
             <p className="text-sm text-muted-foreground mt-2">
-              Sign in to access TRADEFLOW — the unified Issuing Bank workspace.
+              Sign in to access TCS TradeFin AI Solution — the unified Issuing Bank workspace.
             </p>
           </div>
 
@@ -268,7 +182,7 @@ const Login = () => {
               disabled={loading}
               className="w-full h-12 text-sm font-bold gap-2 bg-[#3386C3] hover:bg-[#1F5E8A] text-white"
             >
-              {loading ? "Signing in…" : "Sign in to TRADEFLOW"}
+              {loading ? "Signing in…" : "Sign in to TCS TradeFin AI"}
               <ArrowRight className="w-4 h-4" />
             </Button>
 
@@ -281,7 +195,7 @@ const Login = () => {
           </form>
 
           <p className="mt-8 text-center text-[11px] text-muted-foreground">
-            © 2026 TRADEFLOW · Enterprise Banking Platform
+            © 2026 TCS TradeFin AI Solution · Enterprise Banking Platform
           </p>
         </div>
       </div>

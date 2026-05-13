@@ -34,8 +34,8 @@ export const BrandLogo = ({
   const bodyColor = isNeg ? "#22C55E" : "#3386C3";
   const muted = isNeg ? "#15803D" : "#1F5E8A";
 
-  const wordmark = isNeg ? "TRADEFLOW" : "TRADEFLOW";
-  const tagline = isNeg ? "Negotiating Desk" : "Issuing Desk";
+  const wordmark = "TCS TRADEFIN AI";
+  const tagline = isNeg ? "Solution · Negotiating" : "Solution · Issuing";
 
   return (
     <div className="flex items-center gap-3">
@@ -62,7 +62,7 @@ export const BrandLogo = ({
 
       {showWordmark && (
         <div className="leading-tight">
-          <h1 className={`text-base font-extrabold tracking-wider ${wordmarkClassName}`}>
+          <h1 className={`text-[13px] font-extrabold tracking-wider ${wordmarkClassName}`}>
             {wordmark}
           </h1>
           <p className={`text-[10px] uppercase tracking-[0.2em] ${taglineClassName}`}>

@@ -19,6 +19,7 @@ import {
   Cog,
   Workflow as WorkflowIcon,
   CreditCard,
+  LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,8 +45,9 @@ const menuSections = [
   {
     label: "Workflow",
     items: [
+      { title: "LC Request Received Dashboard", icon: LayoutDashboard, path: "/lc-dashboard" },
       {
-        title: "Create Transaction",
+        title: "LC Request Received",
         icon: FileSignature,
         path: "/create",
         children: [
@@ -90,7 +92,7 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
           <div className="flex items-center gap-2 rounded-md bg-sidebar-accent px-3 py-2">
             <BadgeCheck className="w-3.5 h-3.5 text-sidebar-primary" />
             <span className="text-xs font-semibold text-sidebar-accent-foreground">
-              TRADEFLOW · {roleName || "Issuing Bank"}
+              TCS TRADEFIN AI · {roleName || "Issuing Bank"}
             </span>
           </div>
         </div>

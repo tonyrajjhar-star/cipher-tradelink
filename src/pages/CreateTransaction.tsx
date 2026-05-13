@@ -169,6 +169,66 @@ const CreateTransaction = () => {
         </div>
 
       </div>
+
+      <Dialog open={previewType !== null} onOpenChange={(o) => !o && setPreviewType(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              {previewType === "application" ? (
+                <><FileSignature className="w-4 h-4 text-primary" /> Application Preview</>
+              ) : (
+                <><Files className="w-4 h-4 text-primary" /> Supporting Documents Preview</>
+              )}
+            </DialogTitle>
+          </DialogHeader>
+          {previewType === "application" ? (
+            <div className="rounded-lg bg-gradient-to-br from-muted/60 to-muted/20 border border-border p-6 space-y-3 text-sm">
+              <div className="flex items-center justify-between border-b border-border pb-2">
+                <p className="font-bold text-foreground">LC Application Form · LCR-2026-1004</p>
+                <Badge variant="outline" className="text-[10px]">Signed</Badge>
+              </div>
+              {[
+                ["Application Date", "Apr 12, 2026"],
+                ["Applicant Name", "Al Rajhi Trading Co."],
+                ["Beneficiary", "Siemens AG, Munich"],
+                ["Beneficiary Country", "Germany"],
+                ["LC Amount", "$2,450,000 USD"],
+                ["Tenor", "90 days sight"],
+                ["Goods", "Industrial turbines & spares"],
+              ].map(([k, v]) => (
+                <div key={k} className="grid grid-cols-2 text-xs">
+                  <span className="text-muted-foreground uppercase tracking-wider">{k}</span>
+                  <span className="font-semibold text-foreground">{v}</span>
+                </div>
+              ))}
+              <p className="text-[11px] text-muted-foreground pt-2 border-t border-border">
+                Rendered from the secure LC instrument vault. Read-only.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {[
+                ["Commercial Invoice.pdf", "248 KB"],
+                ["Bill of Lading.pdf", "412 KB"],
+                ["Packing List.pdf", "186 KB"],
+                ["Certificate of Origin.pdf", "92 KB"],
+                ["Insurance Certificate.pdf", "154 KB"],
+              ].map(([n, s]) => (
+                <div key={n} className="flex items-center gap-3 p-3 rounded-lg border border-border bg-muted/30">
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-foreground truncate">{n}</p>
+                    <p className="text-[11px] text-muted-foreground">{s}</p>
+                  </div>
+                  <Eye className="w-4 h-4 text-muted-foreground" />
+                </div>
+              ))}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 };

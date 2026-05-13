@@ -19,6 +19,57 @@ const CreateTransaction = () => {
   return (
     <AppLayout>
       <div className="max-w-6xl mx-auto space-y-6 animate-slide-up">
+        {/* Application Contract & Other Documents */}
+        <div className="rounded-lg bg-card border border-border shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-border bg-muted/40 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileSignature className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+                Application Contract & Other Documents
+              </h3>
+            </div>
+            <Badge variant="outline" className="text-[10px] bg-primary/10 text-primary border-primary/20 uppercase tracking-wider">
+              Auto-fetched
+            </Badge>
+          </div>
+          <div className="p-6 space-y-5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              {[
+                { Icon: Calendar, label: "Application Date", value: "Apr 12, 2026" },
+                { Icon: User, label: "Applicant Name", value: "Al Rajhi Trading Co." },
+                { Icon: Globe2, label: "Beneficiary Country", value: "Germany" },
+                { Icon: DollarSign, label: "LC Amount", value: "$2,450,000" },
+              ].map(({ Icon, label, value }) => (
+                <div key={label} className="rounded-lg border border-border bg-muted/30 p-3">
+                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <Icon className="w-3 h-3" /> {label}
+                  </div>
+                  <p className="mt-1.5 text-sm font-bold text-foreground">{value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-border">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 text-xs"
+                onClick={() => setPreviewType("application")}
+              >
+                <Eye className="w-3.5 h-3.5" /> Preview Application
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 text-xs"
+                onClick={() => setPreviewType("documents")}
+              >
+                <Files className="w-3.5 h-3.5" /> Preview Documents
+              </Button>
+            </div>
+          </div>
+        </div>
+
         {/* Upload */}
         <div className="rounded-lg bg-card border border-border shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-border bg-muted/40 flex items-center justify-between">

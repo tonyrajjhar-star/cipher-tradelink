@@ -1,13 +1,15 @@
 import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
-import { Upload, FileText, ArrowRight, CheckCircle2, X, ShieldCheck, Lock, Clock } from "lucide-react";
+import { Upload, FileText, ArrowRight, CheckCircle2, X, ShieldCheck, Lock, Clock, Eye, FileSignature, Calendar, User, Globe2, DollarSign, Files } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 
 const CreateTransaction = () => {
   const [uploadedFile, setUploadedFile] = useState<string | null>(null);
+  const [previewType, setPreviewType] = useState<null | "application" | "documents">(null);
   const navigate = useNavigate();
 
   const handleUpload = () => {

@@ -7,6 +7,7 @@ import { RoleProvider } from "@/contexts/RoleContext";
 import Login from "./pages/Login";
 import Workflow from "./pages/Workflow";
 import CreateTransaction from "./pages/CreateTransaction";
+import LCRequestDashboard from "./pages/LCRequestDashboard";
 import History from "./pages/History";
 import NegotiatingBank from "./pages/NegotiatingBank";
 import NegotiatingBankProcess from "./pages/NegotiatingBankProcess";
@@ -27,6 +28,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/lc-dashboard" element={<LCRequestDashboard />} />
             <Route path="/create" element={<CreateTransaction />} />
             <Route path="/workflow" element={<Workflow />} />
             <Route path="/negotiating" element={<NegotiatingBank />} />
